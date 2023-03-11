@@ -1,0 +1,17 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven{url "https://download.dynamsoft.com/maven/dce/aar"}
+    }
+}
+rootProject.name = "Capstone Attmpt 1. Shop and Speak"
+include ':app'

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductDisplay">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        tools:ignore="ExtraText,UselessParent">
+
+        <TextView
+            android:id="@+id/BarcodeID"
+            android:layout_width="263dp"
+            android:layout_height="80dp"
+            android:textSize="25sp" />
+
+        <Space
+            android:layout_width="263dp"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:id="@+id/PrintedName"
+            android:layout_width="263dp"
+            android:layout_height="80dp"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="81dp"
+            tools:layout_editor_absoluteY="326dp" />
+
+        <Space
+            android:layout_width="263dp"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:id="@+id/PrintedServingSize"
+            android:layout_width="263dp"
+            android:layout_height="80dp"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="81dp"
+            tools:layout_editor_absoluteY="326dp" />
+
+        <Space
+            android:layout_width="263dp"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:id="@+id/PrintedCals"
+            android:layout_width="263dp"
+            android:layout_height="80dp"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="81dp"
+            tools:layout_editor_absoluteY="326dp" />
+
+        <Space
+            android:layout_width="263dp"
+            android:layout_height="25dp" />
+
+        <Button
+            android:id="@+id/buttonReturn"
+            android:layout_width="263dp"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="@string/return_to_camera"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+
+</RelativeLayout>
