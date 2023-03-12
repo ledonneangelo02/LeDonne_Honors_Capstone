@@ -13,7 +13,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+
 import android.widget.ImageView;
+
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
@@ -34,7 +36,6 @@ import com.journeyapps.barcodescanner.ScanOptions;
 public class MainActivity extends AppCompatActivity {
 
     Button btnSend; //Button used to open the camera
-    ImageView Pass;
 
     //'When this Activity opens' - begin listening for a button click
     @Override
@@ -49,12 +50,16 @@ public class MainActivity extends AppCompatActivity {
             requestPermission();
         }
 
+
+        AppWelcome();
+
         Pass = findViewById(R.id.buttonMic);
 
         Pass.setOnClickListener(view -> {
             Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
             startActivity(SpeechToText);
         });
+
 
         //Setting btnSend to the button in the xml
         btnSend = findViewById(R.id.buttonCam);
@@ -126,6 +131,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
     });
+
+
+    public void AppWelcome(){
+
+
+    }
 
 }
 

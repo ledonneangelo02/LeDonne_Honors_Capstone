@@ -85,6 +85,8 @@ public class SpeechText extends AppCompatActivity {
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 Textedit.setText(data.get(0));
 
+
+                //Checking to See if the user is asking to open the camera up or not
                 for(String x : data){
                     for(int i = 0; i < CameraArray.length; ++i){
                         if(x.toUpperCase().contains(CameraArray[i])){
@@ -110,8 +112,10 @@ public class SpeechText extends AppCompatActivity {
                     });
 
                     textToSpeech.shutdown();
-                    Intent intent = new Intent(SpeechText.this, MainActivity.class);
-                    intent.putExtra("flag", 0);
+
+                    Intent BacktoMain = new Intent(SpeechText.this, MainActivity.class);
+                    startActivity(BacktoMain);
+
                 }
 
             }
