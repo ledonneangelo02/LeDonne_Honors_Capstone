@@ -7,20 +7,50 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class SpeechText extends AppCompatActivity {
+
     EditText Textedit;
-    ImageView Mic;  //Clickable image of a microphone to initiate Speech-to-Text
-    SpeechRecognizer speechRecognizer;
+    Button btnSend;
+    int CameraConfScore = 0;
     String[] CameraArray = new String[]{"USE", "OPEN", "CAMERA", "SCAN", "SCANNER"};
+    SpeechRecognizer speechRecognizer;
     TextToSpeech textToSpeech;
+
+    /*
+    After we scan a barcode, this tells us to pass the data to the other Activities in the app so we
+    can use it as needed
+*/
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        if (result.getContents() != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Results");
+            builder.setMessage(result.getContents());
+
+            //Passing the UPC string to the other activity that we will use to search our database and display information
+            Intent ResPass = new Intent(this, ProductDisplay.class);
+            ResPass.putExtra("barcode", result.getContents());
+            startActivity(ResPass);
+
+            //This option should never happen, this means data was corrupted hardcore
+        } else {
+            Log.e("ScannerError", "No Data was found in the scanner");
+        }
+
+    });
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +59,12 @@ public class SpeechText extends AppCompatActivity {
 
         Textedit = findViewById(R.id.TEdit);
 
-        Mic = findViewById(R.id.buttonMic);
+        ToggleMic();
+        //Setting btnSend to the button in the xml
+        btnSend = findViewById(R.id.buttonCam);
 
-        Mic.setOnClickListener(x -> ToggleMic());
-
-
+        //When the button is clicked, call the openScanner() function
+        btnSend.setOnClickListener(v -> openScanner());
     }
 
 
@@ -78,46 +109,49 @@ public class SpeechText extends AppCompatActivity {
             @Override
             public void onResults(Bundle bundle) {
 
-
-                int ConfScore = 0;
-
-
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 Textedit.setText(data.get(0));
 
-
                 //Checking to See if the user is asking to open the camera up or not
-                for(String x : data){
-                    for(int i = 0; i < CameraArray.length; ++i){
-                        if(x.toUpperCase().contains(CameraArray[i])){
-                            ++ConfScore;
+                for (String x : data) {
+                    for (int i = 0; i < CameraArray.length; ++i) {
+                        if (x.toUpperCase().contains(CameraArray[i])) {
+                            ++CameraConfScore;
                         }
                     }
                 }
 
-                if(ConfScore > 1){
-
+                if (CameraConfScore > 1) {
                     //Turning on the the TextToSpeech talker
                     textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
 
                         // if No error is found then TextToSpeech can perform the translation
-                        if(i != TextToSpeech.ERROR){
+                        if (i != TextToSpeech.ERROR) {
                             // To Choose language of speech
                             textToSpeech.setLanguage(Locale.getDefault());
 
+                            //Let the user know what actions are occurring
                             textToSpeech.speak("Okay, Opening the Camera.", TextToSpeech.QUEUE_FLUSH, null, null);
-
                             textToSpeech.speak("Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_ADD, null, null);
                         }
                     });
-
                     textToSpeech.shutdown();
+                    openScanner();
+                } else {
+                    //Turning on the the TextToSpeech talker
+                    textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
 
-                    Intent BacktoMain = new Intent(SpeechText.this, MainActivity.class);
-                    startActivity(BacktoMain);
-
+                        // if No error is found then TextToSpeech can perform the translation
+                        if (i != TextToSpeech.ERROR) {
+                            // To Choose language of speech
+                            textToSpeech.setLanguage(Locale.getDefault());
+                            //Let the user know what actions are occurring
+                            textToSpeech.speak("I'm sorry, I didn't understand that, could you please try again?", TextToSpeech.QUEUE_FLUSH, null, null);
+                        }
+                    });
+                    textToSpeech.shutdown();
+                    ToggleMic();
                 }
-
             }
 
             @Override
@@ -129,8 +163,8 @@ public class SpeechText extends AppCompatActivity {
             public void onEvent(int i, Bundle bundle) {
 
             }
-        });
 
+        });
         speechRecognizer.startListening(speechRecognizerIntent);
     }
 
@@ -141,4 +175,20 @@ public class SpeechText extends AppCompatActivity {
         speechRecognizer.destroy();
     }
 
+    /*
+     *    This function will open the Barcode scanner and prepare the API for capture
+     *    in this function we will also enable all the options needed to scan the barcodes.
+     */
+    private void openScanner() {
+
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(false);
+        options.setCaptureActivity(CamActivity.class);
+        barLauncher.launch(options);
+
+    }
 }
+
+

@@ -25,19 +25,16 @@ import java.util.Objects;
 
 /*
     PUT A INDEPTH INFO HERE FOR THIS ACTIVITY
- */
+*/
 public class ProductDisplay extends AppCompatActivity {
 
-    //Used for converting speech to text
-    private static final int REQUEST_CODE_SPEECH_INPUT = 1;
-    //The string that holds the UPC data as number string
-    String Rez;
-    //A string Array that will hold the record with the matched UPC code for splitting and parsing
-    String [] recordCols;
-    //The bool flag used for determining weather the record is found in the database or not (TXT file for now)
-    boolean found_flag = false;
-    //The TextToSpeech object needed to speak strings that are passed to it
-    TextToSpeech textToSpeech;
+
+    private static final int REQUEST_CODE_SPEECH_INPUT = 1;     //Used for converting speech to text
+    String Rez;                                                 //The string that holds the UPC data as number string
+    String [] recordCols;                                       //A string Array that will hold the record with the matched UPC code for splitting and parsing
+    boolean found_flag = false;                                 //The bool flag used for determining weather the record is found in the database or not (TXT file for now)
+    TextToSpeech textToSpeech;                                  //The TextToSpeech object needed to speak strings that are passed to it
+
 
     //When the activity appears on the screen, we perform these actions
     @Override
@@ -60,12 +57,14 @@ public class ProductDisplay extends AppCompatActivity {
         //reading the file with all item records in it
         readInternal(fileST);
 
+        /*
+        * If we didn't find the product in the file, we will pass control to the ResultDisp Activity
+        *      So we can add it to our 'database' text file (THIS WILL BE REPLACED WITH WEB SCRAPPING)
+        *
+        * Else, we must have found the item in the file, and we can TextToSpeech the data and wait for
+        *      the user to decide what they would like to do next
+        */
 
-        //if we didn't find the product in the file, we will pass control to the ResultDisp Activity
-        //      So we can add it to our 'database' text file (THIS WILL BE REPLACED WITH WEB SCRAPPING)
-        //
-        //Else, we must have found the item in the file, and we can TextToSpeech the data and wait for
-        //      the user to decide what they would like to do next
         if(!found_flag){
             Intent NewItem = new Intent(this, ResultDisp.class);
             NewItem.putExtra("bcode", Rez);
@@ -100,15 +99,9 @@ public class ProductDisplay extends AppCompatActivity {
                             public void onFinish(){
                                 textToSpeech.speak("@string/Return_to_Camera_Req", TextToSpeech.QUEUE_ADD, null, null);
                             }
-
                             @Override
-                            public void onTick(long l) {
-
-                            }
+                            public void onTick(long l) {}
                         }.start();
-
-
-
                     }
                 }
             });
@@ -117,13 +110,10 @@ public class ProductDisplay extends AppCompatActivity {
 
             //Waiting for the user to click the button to restart the process back at the MainActivity
             thisButton.setOnClickListener(view -> {
-
                 Intent x = new Intent(this, MainActivity.class);
                 startActivity(x);
-
             });
         }
-
     }
 
 
@@ -133,12 +123,10 @@ public class ProductDisplay extends AppCompatActivity {
         //Define a file that we will write
         File file = new File(fileST);
 
-
         if (file.exists()) {
 
             FileInputStream fis;
             String textContent;
-
             try {
 
                 //Creating an Instream reader
@@ -150,7 +138,6 @@ public class ProductDisplay extends AppCompatActivity {
 
                 //While there is still data in the file... keep checking if the UPC is in it
                 while (textContent != null) {
-
 
                     //If the barcode is found in the txt file... then we found the item & it's info
                     //Objects.equals protect against == null case
@@ -170,24 +157,19 @@ public class ProductDisplay extends AppCompatActivity {
                         TextView ServingSize = findViewById(R.id.PrintedServingSize);
                         ServingSize.setText("Serving Size: " + recordCols[2]);
 
-
                         //Set the TextView in the activiy to display the calories
                         TextView Cals = findViewById(R.id.PrintedCals);
                         Cals.setText(recordCols[3] + " Calories");
 
                         fis.close();
-
                     }
-
                     //Reading the next record in the file
                     textContent = br.readLine();
-
                 }
-
                 //Close the file
                 fis.close();
-
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
