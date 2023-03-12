@@ -2,6 +2,7 @@ package com.example.capstoneattmpt1shopandspeak;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -25,7 +26,7 @@ public class SpeechText extends AppCompatActivity {
     EditText Textedit;
     Button btnSend;
     int CameraConfScore = 0;
-    String[] CameraArray = new String[]{"USE", "OPEN", "CAMERA", "SCAN", "SCANNER"};
+    String[] CameraArray = new String[]{"USE", "OPEN", "CAMERA", "SCAN", "SCANNER", "BARCODE"};
     SpeechRecognizer speechRecognizer;
     TextToSpeech textToSpeech;
 
@@ -59,7 +60,12 @@ public class SpeechText extends AppCompatActivity {
 
         Textedit = findViewById(R.id.TEdit);
 
-        ToggleMic();
+        new CountDownTimer(5000, 1000){
+            public void onFinish(){
+                ToggleMic();
+            }
+            @Override
+            public void onTick(long l) {} }.start();
         //Setting btnSend to the button in the xml
         btnSend = findViewById(R.id.buttonCam);
 
@@ -87,24 +93,16 @@ public class SpeechText extends AppCompatActivity {
             }
 
             @Override
-            public void onRmsChanged(float v) {
-
-            }
+            public void onRmsChanged(float v) { }
 
             @Override
-            public void onBufferReceived(byte[] bytes) {
-
-            }
+            public void onBufferReceived(byte[] bytes) { }
 
             @Override
-            public void onEndOfSpeech() {
-                Textedit.setHint("Hmmmm.... Thinking....");
-            }
+            public void onEndOfSpeech() { Textedit.setHint("Hmmmm.... Thinking...."); }
 
             @Override
-            public void onError(int i) {
-
-            }
+            public void onError(int i) { DidntCatchThat(); }
 
             @Override
             public void onResults(Bundle bundle) {
@@ -138,19 +136,7 @@ public class SpeechText extends AppCompatActivity {
                     textToSpeech.shutdown();
                     openScanner();
                 } else {
-                    //Turning on the the TextToSpeech talker
-                    textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
-
-                        // if No error is found then TextToSpeech can perform the translation
-                        if (i != TextToSpeech.ERROR) {
-                            // To Choose language of speech
-                            textToSpeech.setLanguage(Locale.getDefault());
-                            //Let the user know what actions are occurring
-                            textToSpeech.speak("I'm sorry, I didn't understand that, could you please try again?", TextToSpeech.QUEUE_FLUSH, null, null);
-                        }
-                    });
-                    textToSpeech.shutdown();
-                    ToggleMic();
+                    DidntCatchThat();
                 }
             }
 
@@ -189,6 +175,31 @@ public class SpeechText extends AppCompatActivity {
         barLauncher.launch(options);
 
     }
+
+    /* */
+    public void DidntCatchThat(){
+
+        //Turning on the the TextToSpeech talker
+        textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
+
+            // if No error is found then TextToSpeech can perform the translation
+            if (i != TextToSpeech.ERROR) {
+                // To Choose language of speech
+                textToSpeech.setLanguage(Locale.getDefault());
+                //Let the user know what actions are occurring
+                textToSpeech.speak("I'm sorry, I didn't understand that, could you please try again?", TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
+        textToSpeech.shutdown();
+        
+        new CountDownTimer(5000, 1000){
+            public void onFinish(){
+                ToggleMic();
+            }
+            @Override
+            public void onTick(long l) {} }.start();
+    }
 }
+
 
 

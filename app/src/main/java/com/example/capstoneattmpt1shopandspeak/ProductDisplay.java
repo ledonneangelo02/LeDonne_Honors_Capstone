@@ -75,7 +75,6 @@ public class ProductDisplay extends AppCompatActivity {
             textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
 
                 public void onInit(int i) {
-
                     // if No error is found then TextToSpeech can perform the translation
                     if(i != TextToSpeech.ERROR){
                         // To Choose language of speech
@@ -105,7 +104,6 @@ public class ProductDisplay extends AppCompatActivity {
                     }
                 }
             });
-
             textToSpeech.shutdown();
 
             //Waiting for the user to click the button to restart the process back at the MainActivity
