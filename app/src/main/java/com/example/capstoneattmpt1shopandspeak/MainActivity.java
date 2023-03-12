@@ -2,35 +2,27 @@ package com.example.capstoneattmpt1shopandspeak;
 
 
 //All imports needed for API and app functions
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.RECORD_AUDIO;
 
-
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
 
 
 /*
@@ -50,18 +42,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //Check to make sure we have all the permissions needed to perform the actions
         //inside of the application
         if(!checkPermission()){
             requestPermission();
         }
 
+        Pass = findViewById(R.id.buttonMic);
 
-        Intent speechText = new Intent(MainActivity.this, SpeechText.class);
-        startActivity(speechText);
-
-
-
+        Pass.setOnClickListener(view -> {
+            Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
+            startActivity(SpeechToText);
+        });
 
         //Setting btnSend to the button in the xml
         btnSend = findViewById(R.id.buttonCam);

@@ -70,7 +70,6 @@ public class ProductDisplay extends AppCompatActivity {
             Intent NewItem = new Intent(this, ResultDisp.class);
             NewItem.putExtra("bcode", Rez);
             startActivity(NewItem);
-
         }else{
 
             //Turning on the the TextToSpeech talker

@@ -6,6 +6,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -66,7 +67,6 @@ public class SpeechText extends AppCompatActivity {
 
             @Override
             public void onEndOfSpeech() {
-
                 Textedit.setHint("Hmmmm.... Thinking....");
             }
 
@@ -78,21 +78,22 @@ public class SpeechText extends AppCompatActivity {
             @Override
             public void onResults(Bundle bundle) {
 
+
                 int ConfScore = 0;
+
 
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 Textedit.setText(data.get(0));
 
-                for (int i = 0; i < data.size(); ++i) {
-
-                    for (String s : CameraArray) {
-                        if (data.get(i).toUpperCase().equals(s)) {
+                for(String x : data){
+                    for(int i = 0; i < CameraArray.length; ++i){
+                        if(x.toUpperCase().contains(CameraArray[i])){
                             ++ConfScore;
                         }
                     }
                 }
 
-                //if(ConfScore > 1){
+                if(ConfScore > 1){
 
                     //Turning on the the TextToSpeech talker
                     textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
@@ -109,10 +110,9 @@ public class SpeechText extends AppCompatActivity {
                     });
 
                     textToSpeech.shutdown();
-
-
-                    //TODO IMPLEMENT RETURNING TO MAIN WITH STARTING OPENSACNNER() DEPRECIATED BULLSHIT
-                //}
+                    Intent intent = new Intent(SpeechText.this, MainActivity.class);
+                    intent.putExtra("flag", 0);
+                }
 
             }
 
