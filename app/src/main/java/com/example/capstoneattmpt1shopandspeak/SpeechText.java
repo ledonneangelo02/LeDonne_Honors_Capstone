@@ -6,6 +6,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -66,7 +67,6 @@ public class SpeechText extends AppCompatActivity {
 
             @Override
             public void onEndOfSpeech() {
-
                 Textedit.setHint("Hmmmm.... Thinking....");
             }
 
@@ -78,10 +78,13 @@ public class SpeechText extends AppCompatActivity {
             @Override
             public void onResults(Bundle bundle) {
 
+
                 int ConfScore = 0;
+
 
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 Textedit.setText(data.get(0));
+
 
                 //Checking to See if the user is asking to open the camera up or not
                 for(String x : data){
@@ -110,9 +113,9 @@ public class SpeechText extends AppCompatActivity {
 
                     textToSpeech.shutdown();
 
-
                     Intent BacktoMain = new Intent(SpeechText.this, MainActivity.class);
                     startActivity(BacktoMain);
+
                 }
 
             }

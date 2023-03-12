@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import android.widget.ImageView;
+
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +25,6 @@ import androidx.core.content.ContextCompat;
 
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
 
 
 /*
@@ -41,13 +43,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //Check to make sure we have all the permissions needed to perform the actions
         //inside of the application
         if(!checkPermission()){
             requestPermission();
         }
 
+
         AppWelcome();
+
+        Pass = findViewById(R.id.buttonMic);
+
+        Pass.setOnClickListener(view -> {
+            Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
+            startActivity(SpeechToText);
+        });
+
 
         //Setting btnSend to the button in the xml
         btnSend = findViewById(R.id.buttonCam);
