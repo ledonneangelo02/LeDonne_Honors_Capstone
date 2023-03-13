@@ -1,7 +1,7 @@
 <resources>
 
 
-    <string name="app_name">Shop and Speak</string>
+    <string name="app_name">Speak and Seek</string>
     <string name="open_camera">Open Camera</string>
     <string name="title_activity_cam">CamActivity</string>
     <string name="barcode_text">Barcode Text</string>
