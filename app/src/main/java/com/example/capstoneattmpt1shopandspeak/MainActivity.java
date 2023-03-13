@@ -31,20 +31,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnSend; //Button used to open the camera
     TextToSpeech textToSpeech; //TextToSpeech Object so we can allow the app to talk to the user
 
-    /*
-    /*
-    * This Activity Launcher will take the results of the SpeechToText Command
-    * given by the user and determine what to do based on the words that were spoken
-
-    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult( new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == 999) {
-                    //TextToSpeech telling the user what they should do next
-                    openScanner();
-                }
-            });
-    */
-
-
 
     //'When this Activity opens'
     @Override

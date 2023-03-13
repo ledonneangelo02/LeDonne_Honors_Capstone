@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,6 +52,18 @@ public class SpeechText extends AppCompatActivity {
         }
 
     });
+
+    /*
+    * This Activity Launcher will take the results of the SpeechToText Command
+    * given by the user and determine what to do based on the words that were spoken
+
+    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult( new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == 999) {
+                    //TextToSpeech telling the user what they should do next
+                    openScanner();
+                }
+            });
+     */
 
 
     @Override
@@ -191,7 +204,7 @@ public class SpeechText extends AppCompatActivity {
             }
         });
         textToSpeech.shutdown();
-        
+
         new CountDownTimer(5000, 1000){
             public void onFinish(){
                 ToggleMic();
