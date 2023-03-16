@@ -29,7 +29,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     Button btnSend; //Button used to open the camera
-    TextToSpeech textToSpeech; //TextToSpeech Object so we can allow the app to talk to the user
+    TextToSpeech txtTspch; //TextToSpeech Object so we can allow the app to talk to the user
 
 
     //'When this Activity opens'
@@ -44,8 +44,18 @@ public class MainActivity extends AppCompatActivity {
             requestPermission();
         }
 
+        Hello();
+
         //Welcome the user to the app and pass control to a worker class/Activity
-        AppWelcome();
+        new CountDownTimer(5000, 1000){
+            public void onFinish(){
+                AppWelcome();
+            }
+            @Override
+            public void onTick(long l) {}
+
+        }.start();
+
 
         //Incase the user gets back to the MainActivity, give them a button to get back to where they need to be
         btnSend = findViewById(R.id.WelcButton);
@@ -79,12 +89,31 @@ public class MainActivity extends AppCompatActivity {
                         result3 == PackageManager.PERMISSION_GRANTED;
     }
 
-
     /*
     This function is responsible for requesting the permissions we don't currently have.
      */
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, CAMERA, INTERNET, RECORD_AUDIO}, 1);
+    }
+
+
+    public void Hello(){
+        //Turning on the the TextToSpeech talker
+        txtTspch = new TextToSpeech(getApplicationContext(), i -> {
+            // if No error is found then TextToSpeech can perform the translation
+            if(i != TextToSpeech.ERROR){
+                // To Choose language of speech
+                txtTspch.setLanguage(Locale.getDefault());
+                //Ask the user to pick an option
+                new CountDownTimer(3000, 1000){
+                    public void onFinish(){
+                        txtTspch.speak("Hello! Please say Hey You, to begin giving commands", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                    @Override
+                    public void onTick(long l) {} }.start();
+            }
+        });
+        txtTspch.shutdown();
     }
 }
 

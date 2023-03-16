@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,11 +30,13 @@ public class SpeechText extends AppCompatActivity {
     SpeechRecognizer speechRecognizer;
     TextToSpeech textToSpeech, txtTspch, BarcodeTTS;
     boolean button_pressed = false;
+    boolean listen_flag = false;
+
 
     /*
     After we scan a barcode, this tells us to pass the data to the other Activities in the app so we
     can use it as needed
-*/
+    */
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
 
         if(txtTspch != null){ txtTspch.shutdown();}
@@ -58,18 +59,6 @@ public class SpeechText extends AppCompatActivity {
 
     });
 
-    /*
-    * This Activity Launcher will take the results of the SpeechToText Command
-    * given by the user and determine what to do based on the words that were spoken
-
-    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult( new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == 999) {
-                    //TextToSpeech telling the user what they should do next
-                    openScanner();
-                }
-            });
-     */
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +67,7 @@ public class SpeechText extends AppCompatActivity {
 
         Textedit = findViewById(R.id.TEdit);
 
-        Hello();
-        new CountDownTimer(5000, 1000){
+        new CountDownTimer(2000, 1000){
             public void onFinish(){
                 if(!button_pressed) {
                     ToggleMic();
@@ -104,14 +92,15 @@ public class SpeechText extends AppCompatActivity {
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
             public void onReadyForSpeech(Bundle bundle) {
-                Textedit.setHint("Listening...");
+                Textedit.setHint("Ready...");
             }
 
             @Override
             public void onBeginningOfSpeech() {
+
+                Textedit.setHint("Listening...");
                 Textedit.setText("");
-                if(txtTspch != null){ txtTspch.shutdown();}
-                if(textToSpeech != null){ textToSpeech.shutdown();}
+
             }
 
             @Override
@@ -132,35 +121,42 @@ public class SpeechText extends AppCompatActivity {
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 Textedit.setText(data.get(0));
 
-                //Checking to See if the user is asking to open the camera up or not
-                for (String x : data) {
-                    for (int i = 0; i < CameraArray.length; ++i) {
-                        if (x.toUpperCase().contains(CameraArray[i])) {
-                            ++CameraConfScore;
+                /*
+                if(data.get(1).toUpperCase() == "HEY" && data.get(2).toUpperCase() == "YOU"){
+                    listen_flag = true;
+                }else{
+                    ToggleMic();
+                }
+                */
+                    //Checking to See if the user is asking to open the camera up or not
+                    for (String x : data) {
+                        for (int i = 0; i < CameraArray.length; ++i) {
+                            if (x.toUpperCase().contains(CameraArray[i])) {
+                                ++CameraConfScore;
+                            }
                         }
                     }
-                }
 
-                if (CameraConfScore > 1) {
-                    //Turning on the the TextToSpeech talker
-                    BarcodeTTS = new TextToSpeech(getApplicationContext(), i -> {
+                    if (CameraConfScore > 1) {
+                        //Turning on the the TextToSpeech talker
+                        BarcodeTTS = new TextToSpeech(getApplicationContext(), i -> {
 
-                        // if No error is found then TextToSpeech can perform the translation
-                        if (i != TextToSpeech.ERROR) {
-                            // To Choose language of speech
-                            BarcodeTTS.setLanguage(Locale.getDefault());
+                            // if No error is found then TextToSpeech can perform the translation
+                            if (i != TextToSpeech.ERROR) {
+                                // To Choose language of speech
+                                BarcodeTTS.setLanguage(Locale.getDefault());
 
-                            //Let the user know what actions are occurring
-                            BarcodeTTS.speak("Okay, Opening the Camera.", TextToSpeech.QUEUE_FLUSH, null, null);
-                            BarcodeTTS.speak("Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_ADD, null, null);
-                        }
-                    });
-                    BarcodeTTS.shutdown();
+                                //Let the user know what actions are occurring
+                                BarcodeTTS.speak("Okay, Opening the Camera.", TextToSpeech.QUEUE_FLUSH, null, null);
+                                BarcodeTTS.speak("Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_ADD, null, null);
+                            }
+                        });
+                        BarcodeTTS.shutdown();
 
-                    openScanner();
-                } else {
-                    DidntCatchThat();
-                }
+                        openScanner();
+                    } else {
+                        DidntCatchThat();
+                    }
             }
 
             @Override
@@ -190,7 +186,9 @@ public class SpeechText extends AppCompatActivity {
      */
     private void openScanner() {
 
+        if(txtTspch != null) { txtTspch.stop(); }
         button_pressed = true;
+
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up to flash on");
         options.setBeepEnabled(true);
@@ -199,6 +197,7 @@ public class SpeechText extends AppCompatActivity {
         barLauncher.launch(options);
 
     }
+
 
     /* */
     public void DidntCatchThat(){
@@ -215,6 +214,7 @@ public class SpeechText extends AppCompatActivity {
             }
         });
         textToSpeech.shutdown();
+        Textedit.setText("");
 
         new CountDownTimer(5000, 1000){
             public void onFinish(){
@@ -224,24 +224,6 @@ public class SpeechText extends AppCompatActivity {
             public void onTick(long l) {} }.start();
     }
 
-    public void Hello(){
-        //Turning on the the TextToSpeech talker
-        txtTspch = new TextToSpeech(getApplicationContext(), i -> {
-            // if No error is found then TextToSpeech can perform the translation
-            if(i != TextToSpeech.ERROR){
-                // To Choose language of speech
-                txtTspch.setLanguage(Locale.getDefault());
-                //Ask the user to pick an option
-                new CountDownTimer(3000, 1000){
-                    public void onFinish(){
-                        txtTspch.speak("Hello! Please say a command, or hit the Open Camera button to get started!", TextToSpeech.QUEUE_FLUSH, null, null);
-                    }
-                    @Override
-                    public void onTick(long l) {} }.start();
-            }
-        });
-        txtTspch.shutdown();
-    }
 }
 
 

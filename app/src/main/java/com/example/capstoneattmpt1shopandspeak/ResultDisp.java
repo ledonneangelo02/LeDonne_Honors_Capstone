@@ -41,6 +41,7 @@ public class ResultDisp extends AppCompatActivity {
 
 
         //Create strings of the inputted data so we can write it to the txt file
+        String tempUPC = Upc;
         Upc = Upc + ",";
         String Item = Name + ",";
         String Serv = Servings + ",";
@@ -52,7 +53,7 @@ public class ResultDisp extends AppCompatActivity {
 
 
         Intent x = new Intent(ResultDisp.this, ProductDisplay.class);
-        x.putExtra("barcode", Upc);
+        x.putExtra("barcode", tempUPC);
         startActivity(x);
 
     }

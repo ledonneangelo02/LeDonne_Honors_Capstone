@@ -2,29 +2,31 @@ package com.example.capstoneattmpt1shopandspeak;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Locale;
 
 
 public class WebScrapper extends AppCompatActivity{
 
+    TextToSpeech textToSpeech;
     String UpcCode;
     String test, test2, test3;
     Connection.Response res;
     Document doc;
     Intent x;
-    TextView a, b, c;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +36,44 @@ public class WebScrapper extends AppCompatActivity{
 
         Intent i = getIntent();
         UpcCode = i.getStringExtra("bcode");
-        a = findViewById(R.id.ItemName);
-        b = findViewById(R.id.SS);
-        c = findViewById(R.id.Cal);
 
-       new Thread (new Runnable() {
+        BackGroundThread();
+
+    }
+
+    /*
+
+     */
+    public void TryAgain(){
+
+        if(textToSpeech != null){
+            textToSpeech.shutdown();
+        }
+        //Turning on the the TextToSpeech talker
+        textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
+
+            // if No error is found then TextToSpeech can perform the translation
+            if (i != TextToSpeech.ERROR) {
+                // To Choose language of speech
+                textToSpeech.setLanguage(Locale.getDefault());
+                //Let the user know what actions are occurring
+                textToSpeech.speak("I'm sorry, something went wrong, please scan again", TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
+        textToSpeech.shutdown();
+
+
+        Intent x = new Intent(WebScrapper.this, SpeechText.class);
+        startActivity(x);
+    }
+
+
+    /*
+
+     */
+    public void BackGroundThread() {
+
+        new Thread (new Runnable() {
             @Override
             public void run() {
                 try  {
@@ -55,40 +90,46 @@ public class WebScrapper extends AppCompatActivity{
 
                             Element link = doc.select("td.left > a.table_item_name").first();
 
+                            if (link == null) {
+                                TryAgain();
+                            }
+
                             String url = link.absUrl("href");
 
-                            Log.d("URL for new one", url);
+                            if(url.isEmpty()){
+                                TryAgain();
+                            }
 
-                           res = Jsoup.connect(url)
-                                   .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                                   .execute();
+                            res = Jsoup.connect(url)
+                                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                                    .execute();
 
-                           doc = res.parse();
+                            doc = res.parse();
                         }
 
-                        //TODO Check for commas in names and check to make sure names arent too long, then we need to tidy up url connections
-
-                        Elements foodName = doc.select("h1#food-name");
-
-                        for (Element x : foodName) {
-                            test = x.text();
+                        Element foodName = doc.select("h1#food-name").first();
+                        test = foodName.text();
+                        if(test.contains("by")){
+                           int end = test.indexOf("by");
+                           test = test.substring(0, end);
                         }
+                        test = test.replace(',', ' ');
 
-                        Elements ServingSize = doc.select("span#serving-size");
-                        for (Element x : ServingSize) {
-                                test2 = x.text();
-                        }
+                        Element ServingSize = doc.select("span#serving-size").first();
+                        test2 = ServingSize.text();
+                        test2 = test2.replace(',',' ');
 
-                        Elements Calories = doc.select("td#calories");
-                        for (Element x : Calories) {
-                                test3 = x.text();
-                        }
-                            x = new Intent(WebScrapper.this, ResultDisp.class);
-                            x.putExtra("bcode", UpcCode);
-                            x.putExtra("nameOfItem", test);
-                            x.putExtra("Servings", test2);
-                            x.putExtra("CaloriesPerServing", test3);
-                            startActivity(x);
+
+                        Element Calories = doc.select("td#calories").first();
+                        test3 = Calories.text();
+                        test3 = test3.replace(',',' ');
+
+                        x = new Intent(WebScrapper.this, ResultDisp.class);
+                        x.putExtra("bcode", UpcCode);
+                        x.putExtra("nameOfItem", test);
+                        x.putExtra("Servings", test2);
+                        x.putExtra("CaloriesPerServing", test3);
+
 
                     } catch (IOException e) {
                         Log.d("Connection.Response: ", "There is nothing stored under this bar code");
@@ -101,18 +142,19 @@ public class WebScrapper extends AppCompatActivity{
                 }
 
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        a.setText(test);
-                        b.setText(test2);
-                        c.setText(test3);
+                runOnUiThread(() -> {
 
-                    }
+                    new CountDownTimer(5000, 1000){
+                        public void onFinish(){
+                            startActivity(x);
+                        }
+                        @Override
+                        public void onTick(long l) {} }.start();
+
+
                 });
             }
         }).start();
-
     }
 
 }

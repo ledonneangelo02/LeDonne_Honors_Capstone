@@ -108,6 +108,8 @@ public class ProductDisplay extends AppCompatActivity {
 
             //Waiting for the user to click the button to restart the process back at the MainActivity
             thisButton.setOnClickListener(view -> {
+                textToSpeech.stop();
+                textToSpeech.shutdown();
                 Intent x = new Intent(this, SpeechText.class);
                 startActivity(x);
             });

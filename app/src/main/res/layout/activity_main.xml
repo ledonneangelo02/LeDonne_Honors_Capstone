@@ -6,23 +6,26 @@
     tools:context=".MainActivity" >
 
 
-        <TextView
-            android:id="@+id/Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="285dp"
+            android:layout_height="285dp"
             android:layout_centerInParent="true"
+            android:src="@mipmap/ic_launcher" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="22pt"
-            android:textStyle="bold"
-            android:paddingBottom="30sp"/>
+            android:textSize="20pt"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/logo"/>
+
 
         <Button
             android:id="@+id/WelcButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Title"
+            android:layout_above="@+id/logo"
             android:layout_centerHorizontal="true"
             android:text="@string/Welc_Button"
             android:textAllCaps="false"
