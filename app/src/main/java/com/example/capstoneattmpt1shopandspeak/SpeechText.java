@@ -29,13 +29,18 @@ public class SpeechText extends AppCompatActivity {
     int CameraConfScore = 0;
     String[] CameraArray = new String[]{"USE", "OPEN", "CAMERA", "SCAN", "SCANNER", "BARCODE"};
     SpeechRecognizer speechRecognizer;
-    TextToSpeech textToSpeech;
+    TextToSpeech textToSpeech, txtTspch, BarcodeTTS;
+    boolean button_pressed = false;
 
     /*
     After we scan a barcode, this tells us to pass the data to the other Activities in the app so we
     can use it as needed
 */
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+
+        if(txtTspch != null){ txtTspch.shutdown();}
+        if(BarcodeTTS != null){ BarcodeTTS.shutdown();}
+
         if (result.getContents() != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Results");
@@ -73,9 +78,12 @@ public class SpeechText extends AppCompatActivity {
 
         Textedit = findViewById(R.id.TEdit);
 
+        Hello();
         new CountDownTimer(5000, 1000){
             public void onFinish(){
-                ToggleMic();
+                if(!button_pressed) {
+                    ToggleMic();
+                }
             }
             @Override
             public void onTick(long l) {} }.start();
@@ -102,7 +110,8 @@ public class SpeechText extends AppCompatActivity {
             @Override
             public void onBeginningOfSpeech() {
                 Textedit.setText("");
-                Textedit.setHint("Listening...");
+                if(txtTspch != null){ txtTspch.shutdown();}
+                if(textToSpeech != null){ textToSpeech.shutdown();}
             }
 
             @Override
@@ -134,19 +143,20 @@ public class SpeechText extends AppCompatActivity {
 
                 if (CameraConfScore > 1) {
                     //Turning on the the TextToSpeech talker
-                    textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
+                    BarcodeTTS = new TextToSpeech(getApplicationContext(), i -> {
 
                         // if No error is found then TextToSpeech can perform the translation
                         if (i != TextToSpeech.ERROR) {
                             // To Choose language of speech
-                            textToSpeech.setLanguage(Locale.getDefault());
+                            BarcodeTTS.setLanguage(Locale.getDefault());
 
                             //Let the user know what actions are occurring
-                            textToSpeech.speak("Okay, Opening the Camera.", TextToSpeech.QUEUE_FLUSH, null, null);
-                            textToSpeech.speak("Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_ADD, null, null);
+                            BarcodeTTS.speak("Okay, Opening the Camera.", TextToSpeech.QUEUE_FLUSH, null, null);
+                            BarcodeTTS.speak("Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_ADD, null, null);
                         }
                     });
-                    textToSpeech.shutdown();
+                    BarcodeTTS.shutdown();
+
                     openScanner();
                 } else {
                     DidntCatchThat();
@@ -180,6 +190,7 @@ public class SpeechText extends AppCompatActivity {
      */
     private void openScanner() {
 
+        button_pressed = true;
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up to flash on");
         options.setBeepEnabled(true);
@@ -211,6 +222,25 @@ public class SpeechText extends AppCompatActivity {
             }
             @Override
             public void onTick(long l) {} }.start();
+    }
+
+    public void Hello(){
+        //Turning on the the TextToSpeech talker
+        txtTspch = new TextToSpeech(getApplicationContext(), i -> {
+            // if No error is found then TextToSpeech can perform the translation
+            if(i != TextToSpeech.ERROR){
+                // To Choose language of speech
+                txtTspch.setLanguage(Locale.getDefault());
+                //Ask the user to pick an option
+                new CountDownTimer(3000, 1000){
+                    public void onFinish(){
+                        txtTspch.speak("Hello! Please say a command, or hit the Open Camera button to get started!", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                    @Override
+                    public void onTick(long l) {} }.start();
+            }
+        });
+        txtTspch.shutdown();
     }
 }
 

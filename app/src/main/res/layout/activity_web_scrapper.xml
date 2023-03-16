@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WebScrapper">
+
+
+    <TextView
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ItemName"
+        android:textSize="12pt"
+        android:hint="@string/item_name"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SS"
+        android:textSize="15pt"
+        android:layout_below="@+id/ItemName"
+        android:hint="@string/serving_size"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Cal"
+        android:textSize="15pt"
+        android:layout_below="@+id/SS"
+        android:hint="@string/calories_per_serving"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>

@@ -6,7 +6,6 @@ plugins {
  android {
      namespace 'com.example.capstoneattmpt1shopandspeak'
      compileSdk 33
-
      defaultConfig {
          applicationId "com.example.capstoneattmpt1shopandspeak"
          minSdk 26

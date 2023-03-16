@@ -10,6 +10,7 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.widget.Button;
 
@@ -18,7 +19,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
-
 
 /*
 *    This Class is the 'Main' class of the application, it will
@@ -54,19 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
     /* */
     public void AppWelcome(){
-        //Turning on the the TextToSpeech talker
-        textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
-
-            // if No error is found then TextToSpeech can perform the translation
-            if(i != TextToSpeech.ERROR){
-
-                // To Choose language of speech
-                textToSpeech.setLanguage(Locale.getDefault());
-                //Ask the user to pick an option
-                textToSpeech.speak("Hello! Please say a command, or hit the Open Camera button to get started!", TextToSpeech.QUEUE_FLUSH, null, null);
-            }
-        });
-        textToSpeech.shutdown();
 
         Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
         startActivity(SpeechToText);

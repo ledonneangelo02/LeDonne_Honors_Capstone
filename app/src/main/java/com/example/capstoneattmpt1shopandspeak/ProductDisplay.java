@@ -66,7 +66,7 @@ public class ProductDisplay extends AppCompatActivity {
         */
 
         if(!found_flag){
-            Intent NewItem = new Intent(this, ResultDisp.class);
+            Intent NewItem = new Intent(this, WebScrapper.class);
             NewItem.putExtra("bcode", Rez);
             startActivity(NewItem);
         }else{
@@ -96,7 +96,7 @@ public class ProductDisplay extends AppCompatActivity {
                         //button to do it with another item
                         new CountDownTimer(13000, 1000){
                             public void onFinish(){
-                                textToSpeech.speak("@string/Return_to_Camera_Req", TextToSpeech.QUEUE_ADD, null, null);
+                                textToSpeech.speak("Please Use The Return to Camera Button to continue Scanning more Items", TextToSpeech.QUEUE_ADD, null, null);
                             }
                             @Override
                             public void onTick(long l) {}
