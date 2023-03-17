@@ -1,6 +1,10 @@
 package com.example.capstoneattmpt1shopandspeak;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.RecognitionListener;
@@ -21,8 +25,26 @@ import com.journeyapps.barcodescanner.ScanOptions;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/* This activity was created to act as the main interface that interacts with the user via TTS and STT */
 public class SpeechText extends AppCompatActivity {
 
+    /*
+    *   Textedit = A EditText object that stores the string spoken interpreted by Android SpeechRecognizer
+    *
+    *   btnSend = The button that allows the user to open the camera manually
+    *
+    *   CameraConfScore = The "Confidence Score" that I am giving to the spoken string from the user
+    *                       and comparing it to a string of words that might mean "open camera"
+    *
+    *   CameraArray = A string array that holds trigger words that might mean "open the camera"
+    *
+    *   speechRecognizer = a SpeechRecognizer that Android handles internally
+    *
+    *   TextToSpeech = Different TextToSpeech objects that are used to speak information to the user at different times
+    *
+    *   button_pressed = defaulting it to false since the button is pressed yet, but used to trigger the textTospeech off
+    *                       when the button is pressed
+     */
     EditText Textedit;
     Button btnSend;
     int CameraConfScore = 0;
@@ -92,6 +114,11 @@ public class SpeechText extends AppCompatActivity {
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
             public void onReadyForSpeech(Bundle bundle) {
+
+                Uri alarmSound =
+                        RingtoneManager. getDefaultUri (RingtoneManager. TYPE_NOTIFICATION );
+                MediaPlayer mp = MediaPlayer. create (getApplicationContext(), alarmSound);
+                mp.start();
                 Textedit.setHint("Ready...");
             }
 
@@ -218,6 +245,7 @@ public class SpeechText extends AppCompatActivity {
 
         new CountDownTimer(5000, 1000){
             public void onFinish(){
+                textToSpeech.stop();
                 ToggleMic();
             }
             @Override
