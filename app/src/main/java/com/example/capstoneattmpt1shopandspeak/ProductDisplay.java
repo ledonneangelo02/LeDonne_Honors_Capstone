@@ -23,41 +23,42 @@ import java.util.Objects;
 
 
 
-/*
-    PUT A INDEPTH INFO HERE FOR THIS ACTIVITY
+/**
+ * This Activity is used to display the final results to the user with a name, serving size and calorie
+ *      count. It will then speak each field to the user TODO allow the user to touch the column they want to hear again and we will repeat the name of it
 */
 public class ProductDisplay extends AppCompatActivity {
 
 
-    private static final int REQUEST_CODE_SPEECH_INPUT = 1;     //Used for converting speech to text
-    String Rez;                                                 //The string that holds the UPC data as number string
-    String [] recordCols;                                       //A string Array that will hold the record with the matched UPC code for splitting and parsing
-    boolean found_flag = false;                                 //The bool flag used for determining weather the record is found in the database or not (TXT file for now)
-    TextToSpeech textToSpeech;                                  //The TextToSpeech object needed to speak strings that are passed to it
+    private static final int REQUEST_CODE_SPEECH_INPUT = 1;     /** Used for converting speech to text  */
+    String Rez;                                                 /**The string that holds the UPC data as number string  */
+    String [] recordCols;                                       /**A string Array that will hold the record with the matched UPC code for splitting and parsing  */
+    boolean found_flag = false;                                 /**The bool flag used for determining weather the record is found in the database or not (TXT file for now)  */
+    TextToSpeech textToSpeech;                                  /**The TextToSpeech object needed to speak strings that are passed to it  */
 
 
-    //When the activity appears on the screen, we perform these actions
+    /**When the activity appears on the screen, we perform these actions  */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_display);
 
-        //String that holds the text files path so we can find it and read it easier
+        /**String that holds the text files path so we can find it and read it easier  */
         String fileST = getFilesDir() + "/" + "Records.txt";
 
-        //creating an intent so we can use the getStringExtra that we passed on the previous Activity with the UPC string
+        /**creating an intent so we can use the getStringExtra that we passed on the previous Activity with the UPC string  */
         Intent i = getIntent();
         Rez = i.getStringExtra("barcode");
 
-        //Defining the buttons and the TextView used in the XML for the layout
+        /**Defining the buttons and the TextView used in the XML for the layout  */
         Button thisButton = findViewById(R.id.buttonReturn);
         TextView MyTextView = findViewById(R.id.BarcodeID);
         MyTextView.setText(Rez);
 
-        //reading the file with all item records in it
+        /**reading the file with all item records in it */
         readInternal(fileST);
 
-        /*
+        /**
         * If we didn't find the product in the file, we will pass control to the ResultDisp Activity
         *      So we can add it to our 'database' text file (THIS WILL BE REPLACED WITH WEB SCRAPPING)
         *
@@ -71,29 +72,29 @@ public class ProductDisplay extends AppCompatActivity {
             startActivity(NewItem);
         }else{
 
-            //Turning on the the TextToSpeech talker
+            /**Turning on the the TextToSpeech talker */
             textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
 
                 public void onInit(int i) {
-                    // if No error is found then TextToSpeech can perform the translation
+                    /** if No error is found then TextToSpeech can perform the translation */
                     if(i != TextToSpeech.ERROR){
-                        // To Choose language of speech
+                        /** To Choose language of speech */
                         textToSpeech.setLanguage(Locale.getDefault());
 
-                        //This speaks the name of the item scanned
+                        /**This speaks the name of the item scanned */
                         textToSpeech.speak(recordCols[1], TextToSpeech.QUEUE_FLUSH, null, null);
 
-                        //This speaks the searving size of the item
+                        /**This speaks the searving size of the item */
                         textToSpeech.speak("The Serving Size is ", TextToSpeech.QUEUE_ADD, null, null);
                         textToSpeech.speak(recordCols[2], TextToSpeech.QUEUE_ADD, null, null);
 
-                        //This speaks the calories per serving
+                        /**This speaks the calories per serving */
                         textToSpeech.speak("And, each Serving has ", TextToSpeech.QUEUE_ADD, null, null);
                         textToSpeech.speak(recordCols[3], TextToSpeech.QUEUE_ADD, null, null);
                         textToSpeech.speak(" Calories", TextToSpeech.QUEUE_ADD, null, null);
 
-                        //waits for the user to process what was just spoke to them and then lets them know they can press the
-                        //button to do it with another item
+                        /**waits for the user to process what was just spoke to them and then lets them know they can press the
+                          button to do it with another item */
                         new CountDownTimer(13000, 1000){
                             public void onFinish(){
                                 textToSpeech.speak("Please Use The Return to Camera Button to continue Scanning more Items", TextToSpeech.QUEUE_ADD, null, null);
@@ -106,7 +107,7 @@ public class ProductDisplay extends AppCompatActivity {
             });
             textToSpeech.shutdown();
 
-            //Waiting for the user to click the button to restart the process back at the MainActivity
+            /**Waiting for the user to click the button to restart the process back at the MainActivity  */
             thisButton.setOnClickListener(view -> {
                 textToSpeech.stop();
                 textToSpeech.shutdown();
@@ -117,10 +118,10 @@ public class ProductDisplay extends AppCompatActivity {
     }
 
 
-    //This is the function used to read the internal file with the item records
+    /**This is the function used to read the internal file with the item records */
     private void readInternal(String fileST) {
 
-        //Define a file that we will write
+        /**Define a file that we will write */
         File file = new File(fileST);
 
         if (file.exists()) {
@@ -129,44 +130,44 @@ public class ProductDisplay extends AppCompatActivity {
             String textContent;
             try {
 
-                //Creating an Instream reader
+                /**Creating an Instream reader */
                 fis = new FileInputStream(file);
                 BufferedReader br = new BufferedReader(new FileReader(fileST));
 
-                //Priming read of the file
+                /**Priming read of the file */
                 textContent = br.readLine();
 
-                //While there is still data in the file... keep checking if the UPC is in it
+                /**While there is still data in the file... keep checking if the UPC is in it */
                 while (textContent != null) {
 
-                    //If the barcode is found in the txt file... then we found the item & it's info
-                    //Objects.equals protect against == null case
+                    /**If the barcode is found in the txt file... then we found the item & it's info
+                        Objects.equals protect against == null case */
                     if (Objects.equals(Rez, textContent.substring(0, Rez.length()))) {
 
-                        //set the flag to true since we found the record
+                        /** set the flag to true since we found the record  */
                         found_flag = true;
 
-                        //Split the record into substrings and use a comma as the delimitor
+                        /**Split the record into substrings and use a comma as the delimitor  */
                         recordCols = textContent.split(",");
 
-                        //Set the TextView in the activiy to display the item name
+                        /**Set the TextView in the activiy to display the item name */
                         TextView ItemName = findViewById(R.id.PrintedName);
                         ItemName.setText("Item: " + recordCols[1]);
 
-                        //Set the TextView in the activiy to display the serving size
+                        /**Set the TextView in the activiy to display the serving size */
                         TextView ServingSize = findViewById(R.id.PrintedServingSize);
                         ServingSize.setText("Serving Size: " + recordCols[2]);
 
-                        //Set the TextView in the activiy to display the calories
+                        /**Set the TextView in the activiy to display the calories */
                         TextView Cals = findViewById(R.id.PrintedCals);
                         Cals.setText(recordCols[3] + " Calories");
 
                         fis.close();
                     }
-                    //Reading the next record in the file
+                    /**Reading the next record in the file */
                     textContent = br.readLine();
                 }
-                //Close the file
+                /**Close the file */
                 fis.close();
             }
             catch (Exception e) {

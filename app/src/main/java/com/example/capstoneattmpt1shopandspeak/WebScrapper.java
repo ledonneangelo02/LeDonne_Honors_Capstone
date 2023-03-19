@@ -17,17 +17,42 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.Locale;
 
-
+/**
+ * This Activity is responsible for scrapping the data from the website we have given it 
+ * 
+ *      textToSpeech = a TTS object that we will use to speak information to the user
+ *      
+ *      UpcCode = A String that will hold the UPC code that the user scanned (or at least what the API interpreted)
+ *      
+ *      Food_name, ServSize, CalsPerServ = The data items we care about that we are scrapping off the web to inform the user TODO (FOR NOW, EVENTUALLY MAIN FRAME DB2 SQL queries)
+ *
+ *      res = The response we get from the html POST we performed on the search.php script to search for the item
+ *
+ *      doc = The Document object that we are going to parse the HTML and find the data points to display for the user
+ *
+ *      x = and Intent that we will use to pass control over to the ResultDisp Activity after we load the data.
+ *
+ *      This activity works as a Web scrapper in the back-end while looking like a loading screen on the front-end.
+ */
 public class WebScrapper extends AppCompatActivity{
 
     TextToSpeech textToSpeech;
     String UpcCode;
-    String test, test2, test3;
+    String Food_Name, ServSize, CalsPerServ;
     Connection.Response res;
     Document doc;
     Intent x;
 
 
+    /**
+     *
+     * @param savedInstanceState - Creating the Instance of of the the last known saved state
+     *                                in case there was any data that needed to be stored passively, allows
+     *                                us to pick up right where we left off.
+     *
+     *      This method will start by acquiring the UPC code that we are going to be giving information on
+     *             and then it starts the scrapping process in a background thread.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,35 +66,42 @@ public class WebScrapper extends AppCompatActivity{
 
     }
 
-    /*
-
+    /**
+     * This method is used just in case the Barcode Scanner doesn't understand the UPC that was interpreted.
+     *      At the end of this method it throws the user right back to the SpeechText() and will allow
+     *      the user to try the scanning process again.
      */
     public void TryAgain(){
 
         if(textToSpeech != null){
             textToSpeech.shutdown();
         }
-        //Turning on the the TextToSpeech talker
+        /** Turning on the the TextToSpeech talker */
         textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
 
-            // if No error is found then TextToSpeech can perform the translation
+            /** if No error is found then TextToSpeech can perform the translation */
             if (i != TextToSpeech.ERROR) {
-                // To Choose language of speech
+                /** To Choose language of speech */
                 textToSpeech.setLanguage(Locale.getDefault());
-                //Let the user know what actions are occurring
+                /** Let the user know what actions are occurring */
                 textToSpeech.speak("I'm sorry, something went wrong, please scan again", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
         textToSpeech.shutdown();
 
-
+        /** Starting the SpeechText Activity over again */
         Intent x = new Intent(WebScrapper.this, SpeechText.class);
         startActivity(x);
     }
 
 
-    /*
-
+    /**
+     *  This is the Web Scrapping thread where we begin with submitting a HTML POST for the UPC code of
+     *      the item scanned and then returns the resulting page query into the 'res' object that we can
+     *      then place in a Document and parse the HTML tags.
+     *
+     *  After we scan the result of the POST we then decide what we need to do with the data next ultimately ending with
+     *  the products information being displayed for the user
      */
     public void BackGroundThread() {
 
@@ -108,27 +140,27 @@ public class WebScrapper extends AppCompatActivity{
                         }
 
                         Element foodName = doc.select("h1#food-name").first();
-                        test = foodName.text();
-                        if(test.contains("by")){
-                           int end = test.indexOf("by");
-                           test = test.substring(0, end);
+                        Food_Name = foodName.text();
+                        if(Food_Name.contains("by")){
+                           int end = Food_Name.indexOf("by");
+                           Food_Name = Food_Name.substring(0, end);
                         }
-                        test = test.replace(',', ' ');
+                        Food_Name = Food_Name.replace(',', ' ');
 
                         Element ServingSize = doc.select("span#serving-size").first();
-                        test2 = ServingSize.text();
-                        test2 = test2.replace(',',' ');
+                        ServSize = ServingSize.text();
+                        ServSize = ServSize.replace(',',' ');
 
 
                         Element Calories = doc.select("td#calories").first();
-                        test3 = Calories.text();
-                        test3 = test3.replace(',',' ');
+                        CalsPerServ = Calories.text();
+                        CalsPerServ = CalsPerServ.replace(',',' ');
 
                         x = new Intent(WebScrapper.this, ResultDisp.class);
                         x.putExtra("bcode", UpcCode);
-                        x.putExtra("nameOfItem", test);
-                        x.putExtra("Servings", test2);
-                        x.putExtra("CaloriesPerServing", test3);
+                        x.putExtra("nameOfItem", Food_Name);
+                        x.putExtra("Servings", ServSize);
+                        x.putExtra("CaloriesPerServing", CalsPerServ);
 
 
                     } catch (IOException e) {

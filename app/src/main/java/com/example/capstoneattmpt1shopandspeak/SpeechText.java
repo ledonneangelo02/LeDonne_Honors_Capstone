@@ -25,26 +25,26 @@ import com.journeyapps.barcodescanner.ScanOptions;
 import java.util.ArrayList;
 import java.util.Locale;
 
-/* This activity was created to act as the main interface that interacts with the user via TTS and STT */
+/**
+ * This activity was created to act as the main interface that interacts with the user via TTS and STT
+ *   Textedit = A EditText object that stores the string spoken interpreted by Android SpeechRecognizer
+ *
+ *   btnSend = The button that allows the user to open the camera manually
+ *
+ *   CameraConfScore = The "Confidence Score" that I am giving to the spoken string from the user
+ *                       and comparing it to a string of words that might mean "open camera"
+ *
+ *   CameraArray = A string array that holds trigger words that might mean "open the camera"
+ *
+ *   speechRecognizer = a SpeechRecognizer that Android handles internally
+ *
+ *   TextToSpeech = Different TextToSpeech objects that are used to speak information to the user at different times
+ *
+ *   button_pressed = defaulting it to false since the button is pressed yet, but used to trigger the textTospeech off
+ *                       when the button is pressed
+ */
 public class SpeechText extends AppCompatActivity {
 
-    /*
-    *   Textedit = A EditText object that stores the string spoken interpreted by Android SpeechRecognizer
-    *
-    *   btnSend = The button that allows the user to open the camera manually
-    *
-    *   CameraConfScore = The "Confidence Score" that I am giving to the spoken string from the user
-    *                       and comparing it to a string of words that might mean "open camera"
-    *
-    *   CameraArray = A string array that holds trigger words that might mean "open the camera"
-    *
-    *   speechRecognizer = a SpeechRecognizer that Android handles internally
-    *
-    *   TextToSpeech = Different TextToSpeech objects that are used to speak information to the user at different times
-    *
-    *   button_pressed = defaulting it to false since the button is pressed yet, but used to trigger the textTospeech off
-    *                       when the button is pressed
-     */
     EditText Textedit;
     Button btnSend;
     int CameraConfScore = 0;
@@ -55,33 +55,48 @@ public class SpeechText extends AppCompatActivity {
     boolean listen_flag = false;
 
 
-    /*
-    After we scan a barcode, this tells us to pass the data to the other Activities in the app so we
-    can use it as needed
-    */
+    /**
+     * Barcode Activity Launcher used with the zxing barcode scanning API
+     *
+     * This ActivityResultLauncher receives a ScanOption Object that is launched
+     * with zxing options for a barcode scanner with flashlight control as well as confirmation beeping
+     * (See OpenScanner() method).
+     */
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
 
+        /** Shut down any TTS object that might be talking. If the object is not talking yet, we won't touch it */
         if(txtTspch != null){ txtTspch.shutdown();}
         if(BarcodeTTS != null){ BarcodeTTS.shutdown();}
 
+        /** using the .getContents() method from the ActivityResult Launch input object that we are currently defining.
+         *      IF we have something inside of our input, then we can proceed to the next step of attempting to analyze the data */
         if (result.getContents() != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Results");
             builder.setMessage(result.getContents());
 
-            //Passing the UPC string to the other activity that we will use to search our database and display information
+            /** Passing the UPC string to the other activity that we will use to search our database and display information */
             Intent ResPass = new Intent(this, ProductDisplay.class);
             ResPass.putExtra("barcode", result.getContents());
             startActivity(ResPass);
 
-            //This option should never happen, this means data was corrupted hardcore
+            /** This option should never happen, this means data was corrupted hardcore */
         } else {
             Log.e("ScannerError", "No Data was found in the scanner");
         }
 
     });
 
-
+    /**
+     *
+     * @param savedInstanceState - Creating the Instance of of the the last known saved state
+     *                           in case there was any data that needed to be stored passively, allows
+     *                           us to pick up right where we left off.
+     *
+     *  We will be opening a TextEdit field that will print what the user is saying as
+     *    the SpeechRecognizer attempts to decipher what the user is asking it to do.
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +104,8 @@ public class SpeechText extends AppCompatActivity {
 
         Textedit = findViewById(R.id.TEdit);
 
+        /** This is a CountDownTimer Object that just waits 2 seconds before it toggles
+         * the microphone on for the user to give another command*/
         new CountDownTimer(2000, 1000){
             public void onFinish(){
                 if(!button_pressed) {
