@@ -97,7 +97,7 @@ public class ProductDisplay extends AppCompatActivity {
                           button to do it with another item */
                         new CountDownTimer(13000, 1000){
                             public void onFinish(){
-                                textToSpeech.speak("Please Use The Return to Camera Button to continue Scanning more Items", TextToSpeech.QUEUE_ADD, null, null);
+                                textToSpeech.speak("Please use the Scan More Items button if you wish to continue", TextToSpeech.QUEUE_ADD, null, null);
                             }
                             @Override
                             public void onTick(long l) {}

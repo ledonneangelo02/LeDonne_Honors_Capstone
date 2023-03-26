@@ -46,25 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
         Hello();
 
-        /** Welcome the user to the app and pass control to a worker class/Activity */
-        new CountDownTimer(5000, 1000){
-            public void onFinish(){
-                AppWelcome();
-            }
-            @Override
-            public void onTick(long l) {}
 
-        }.start();
-
-
-        /** Incase the user gets back to the MainActivity, give them a button to get back to where they need to be */
         btnSend = findViewById(R.id.WelcButton);
         btnSend.setOnClickListener(v -> AppWelcome());
+
     }
 
     /** This Method is simple, it passes the work onto the SpeechToText Activity since that's where we
      *      would like the user to interact with the app interface */
     public void AppWelcome(){
+
+        if(txtTspch != null ){ txtTspch.shutdown(); }
 
         Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
         startActivity(SpeechToText);

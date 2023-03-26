@@ -13,8 +13,12 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -76,20 +80,16 @@ public class WebScrapper extends AppCompatActivity{
         if(textToSpeech != null){
             textToSpeech.shutdown();
         }
-        /** Turning on the the TextToSpeech talker */
+
         textToSpeech = new TextToSpeech(getApplicationContext(), i -> {
 
-            /** if No error is found then TextToSpeech can perform the translation */
             if (i != TextToSpeech.ERROR) {
-                /** To Choose language of speech */
                 textToSpeech.setLanguage(Locale.getDefault());
-                /** Let the user know what actions are occurring */
                 textToSpeech.speak("I'm sorry, something went wrong, please scan again", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
         textToSpeech.shutdown();
 
-        /** Starting the SpeechText Activity over again */
         Intent x = new Intent(WebScrapper.this, SpeechText.class);
         startActivity(x);
     }
@@ -105,9 +105,12 @@ public class WebScrapper extends AppCompatActivity{
      */
     public void BackGroundThread() {
 
+
         new Thread (new Runnable() {
             @Override
             public void run() {
+                String url;
+                ArrayList urList = null;
                 try  {
                     try {
                         res = Jsoup.connect("https://www.nutritionvalue.org/search.php")
@@ -120,23 +123,15 @@ public class WebScrapper extends AppCompatActivity{
 
                         if(doc.title().contains("foods")) {
 
-                            Element link = doc.select("td.left > a.table_item_name").first();
+                            Elements link = doc.select("td.left > a.table_item_name");
 
-                            if (link == null) {
-                                TryAgain();
+                            assert link != null;
+
+                            for(Element x : link) {
+                                url = x.absUrl("href");
+                                urList.add(url);
                             }
 
-                            String url = link.absUrl("href");
-
-                            if(url.isEmpty()){
-                                TryAgain();
-                            }
-
-                            res = Jsoup.connect(url)
-                                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                                    .execute();
-
-                            doc = res.parse();
                         }
 
                         Element foodName = doc.select("h1#food-name").first();

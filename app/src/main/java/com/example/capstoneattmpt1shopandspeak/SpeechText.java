@@ -1,10 +1,6 @@
 package com.example.capstoneattmpt1shopandspeak;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.RecognitionListener;
@@ -14,6 +10,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
@@ -47,12 +44,12 @@ public class SpeechText extends AppCompatActivity {
 
     EditText Textedit;
     Button btnSend;
+    ImageView mic;
     int CameraConfScore = 0;
     String[] CameraArray = new String[]{"USE", "OPEN", "CAMERA", "SCAN", "SCANNER", "BARCODE"};
     SpeechRecognizer speechRecognizer;
     TextToSpeech textToSpeech, txtTspch, BarcodeTTS;
     boolean button_pressed = false;
-    boolean listen_flag = false;
 
 
     /**
@@ -103,22 +100,20 @@ public class SpeechText extends AppCompatActivity {
         setContentView(R.layout.activity_speech_text);
 
         Textedit = findViewById(R.id.TEdit);
+        mic = findViewById(R.id.buttonMic);
 
-        /** This is a CountDownTimer Object that just waits 2 seconds before it toggles
-         * the microphone on for the user to give another command*/
-        new CountDownTimer(2000, 1000){
-            public void onFinish(){
-                if(!button_pressed) {
-                    ToggleMic();
-                }
-            }
-            @Override
-            public void onTick(long l) {} }.start();
+        mic.setOnClickListener(v -> ToggleMic());
+
         //Setting btnSend to the button in the xml
         btnSend = findViewById(R.id.buttonCam);
 
         //When the button is clicked, call the openScanner() function
         btnSend.setOnClickListener(v -> openScanner());
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 
 
@@ -132,10 +127,6 @@ public class SpeechText extends AppCompatActivity {
             @Override
             public void onReadyForSpeech(Bundle bundle) {
 
-                Uri alarmSound =
-                        RingtoneManager. getDefaultUri (RingtoneManager. TYPE_NOTIFICATION );
-                MediaPlayer mp = MediaPlayer. create (getApplicationContext(), alarmSound);
-                mp.start();
                 Textedit.setHint("Ready...");
             }
 
@@ -165,42 +156,35 @@ public class SpeechText extends AppCompatActivity {
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 Textedit.setText(data.get(0));
 
-                /*
-                if(data.get(1).toUpperCase() == "HEY" && data.get(2).toUpperCase() == "YOU"){
-                    listen_flag = true;
-                }else{
-                    ToggleMic();
-                }
-                */
-                    //Checking to See if the user is asking to open the camera up or not
-                    for (String x : data) {
-                        for (int i = 0; i < CameraArray.length; ++i) {
-                            if (x.toUpperCase().contains(CameraArray[i])) {
-                                ++CameraConfScore;
-                            }
+                //Checking to See if the user is asking to open the camera up or not
+                for (String x : data) {
+                    for (int i = 0; i < CameraArray.length; ++i) {
+                        if (x.toUpperCase().contains(CameraArray[i])) {
+                            ++CameraConfScore;
                         }
                     }
+                }
 
-                    if (CameraConfScore > 1) {
-                        //Turning on the the TextToSpeech talker
-                        BarcodeTTS = new TextToSpeech(getApplicationContext(), i -> {
+                if (CameraConfScore > 1) {
+                    //Turning on the the TextToSpeech talker
+                    BarcodeTTS = new TextToSpeech(getApplicationContext(), i -> {
 
-                            // if No error is found then TextToSpeech can perform the translation
-                            if (i != TextToSpeech.ERROR) {
-                                // To Choose language of speech
-                                BarcodeTTS.setLanguage(Locale.getDefault());
+                        // if No error is found then TextToSpeech can perform the translation
+                        if (i != TextToSpeech.ERROR) {
+                            // To Choose language of speech
+                            BarcodeTTS.setLanguage(Locale.getDefault());
 
-                                //Let the user know what actions are occurring
-                                BarcodeTTS.speak("Okay, Opening the Camera.", TextToSpeech.QUEUE_FLUSH, null, null);
-                                BarcodeTTS.speak("Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_ADD, null, null);
-                            }
-                        });
-                        BarcodeTTS.shutdown();
+                            //Let the user know what actions are occurring
+                            BarcodeTTS.speak("Okay, Opening the Camera.", TextToSpeech.QUEUE_FLUSH, null, null);
+                            BarcodeTTS.speak("Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_ADD, null, null);
+                        }
+                    });
+                    BarcodeTTS.shutdown();
 
-                        openScanner();
-                    } else {
-                        DidntCatchThat();
-                    }
+                    openScanner();
+                } else {
+                    DidntCatchThat();
+                }
             }
 
             @Override
@@ -224,7 +208,7 @@ public class SpeechText extends AppCompatActivity {
         speechRecognizer.destroy();
     }
 
-    /*
+    /**
      *    This function will open the Barcode scanner and prepare the API for capture
      *    in this function we will also enable all the options needed to scan the barcodes.
      */
@@ -260,16 +244,9 @@ public class SpeechText extends AppCompatActivity {
         textToSpeech.shutdown();
         Textedit.setText("");
 
-        new CountDownTimer(5000, 1000){
-            public void onFinish(){
-                textToSpeech.stop();
-                ToggleMic();
-            }
-            @Override
-            public void onTick(long l) {} }.start();
     }
-
 }
+
 
 
 
