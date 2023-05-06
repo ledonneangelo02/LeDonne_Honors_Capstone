@@ -1,4 +1,4 @@
-#Shop & Speak | LeDonne Honors Capstone 2023
+# Shop & Speak | LeDonne Honors Capstone 2023
 
 **This Project is Written and Designed By: Angelo LeDonne**
 
