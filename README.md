@@ -1,7 +1,9 @@
 ![Progress](http://img.shields.io/badge/In-Progress-yellow.png)
 
-# Shop & Speak | LeDonne Honors Capstone 2023
-#### Written and Designed By: Angelo LeDonne (z1920784) 
+<div align='center'>
+<h1>Shop & Speak | LeDonne Honors Capstone 2023</h1>
+<h3>Written and Designed By: Angelo LeDonne (z1920784)</h3> 
+</div>
 
 # Purpose
-There are 20 million people around the globe with some level of visual impairment. Let's help the world see Eye-to-Eye.
+</t> As a Honors Student at Northern Illinois University, I must complete a capstone project to showcase the skills I have developed in and out of the classroom on my road to graduation.
