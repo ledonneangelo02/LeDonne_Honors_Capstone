@@ -6,4 +6,6 @@
 </div>
 
 # Purpose
-</t> As a Honors Student at Northern Illinois University, I must complete a capstone project to showcase the skills I have developed in and out of the classroom on my road to graduation.
+&emsp; As a Honors Student at Northern Illinois University, I must complete a capstone project to showcase the skills I have developed in and out of the classroom on my road to graduation.
+
+# Shop & Speak... What's that?
