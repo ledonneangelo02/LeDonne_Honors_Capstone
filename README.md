@@ -1,6 +1,8 @@
 ![Progress](http://img.shields.io/badge/In-Progress-yellow.png)
 
 
-**Purpose:** The Purpose of this project is to implement communication between a mobile device and the Mainframe
+# **Purpose:** 
+&nbsp;&nbsp;The Purpose of this project is to implement communication between a mobile device and the Mainframe
 
-**Speak and Seek** is an Android application that is designed to assist visually impaired individuals with their shopping needs. Speak and Seek implements the convenience of a smartphone with the lightening fast features of the Mainframe 
+# **Speak and Seek** 
+&nbsp;&nbsp;is an Android application that is designed to assist visually impaired individuals with their shopping needs. Speak and Seek implements the convenience of a smartphone with the lightening fast features of the Mainframe 
