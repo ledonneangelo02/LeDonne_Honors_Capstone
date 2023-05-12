@@ -5,58 +5,46 @@
     android:layout_height="match_parent"
     tools:context=".ProductDisplay">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        tools:ignore="ExtraText,UselessParent">
 
-        <TextView
-            android:id="@+id/BarcodeID"
-            android:layout_width="263dp"
-            android:layout_height="80dp"
-            android:textSize="25sp" />
 
-        <Space
-            android:layout_width="263dp"
-            android:layout_height="25dp" />
+
 
         <TextView
             android:id="@+id/PrintedName"
-            android:layout_width="263dp"
+            android:layout_width="300dp"
             android:layout_height="80dp"
             android:textSize="20sp"
-            tools:layout_editor_absoluteX="81dp"
-            tools:layout_editor_absoluteY="326dp" />
-
-        <Space
-            android:layout_width="263dp"
-            android:layout_height="25dp" />
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            />
 
         <TextView
             android:id="@+id/PrintedServingSize"
-            android:layout_width="263dp"
+            android:layout_width="300dp"
             android:layout_height="80dp"
             android:textSize="20sp"
-            tools:layout_editor_absoluteX="81dp"
-            tools:layout_editor_absoluteY="326dp" />
+            android:layout_below="@+id/PrintedName"
+            android:layout_centerHorizontal="true"/>
 
-        <Space
-            android:layout_width="263dp"
-            android:layout_height="25dp" />
 
         <TextView
             android:id="@+id/PrintedCals"
-            android:layout_width="263dp"
+            android:layout_width="300dp"
             android:layout_height="80dp"
             android:textSize="20sp"
-            tools:layout_editor_absoluteX="81dp"
-            tools:layout_editor_absoluteY="326dp" />
+            android:layout_below="@+id/PrintedServingSize"
+            android:layout_centerHorizontal="true"/>
 
-        <Space
-            android:layout_width="263dp"
-            android:layout_height="25dp" />
+
+        <ImageView
+
+            android:id="@+id/buttonMic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/Mic"
+            android:background="?selectableItemBackground"
+            android:src="@drawable/micpic"
+            android:layout_centerInParent="true" />
 
         <Button
             android:id="@+id/buttonReturn"
@@ -64,8 +52,24 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:text="@string/return_to_camera"
-            android:textAllCaps="false" />
-    </LinearLayout>
+            android:textAllCaps="false"
+            android:layout_below="@+id/buttonMic"
+            android:layout_centerHorizontal="true"/>
+
+        <Space
+            android:id="@+id/Padder"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/buttonReturn" />
+
+        <TextView
+            android:id="@+id/BarcodeID"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/Padder"
+            />
 
 
 </RelativeLayout>

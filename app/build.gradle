@@ -6,7 +6,6 @@ plugins {
  android {
      namespace 'com.example.capstoneattmpt1shopandspeak'
      compileSdk 33
-
      defaultConfig {
          applicationId "com.example.capstoneattmpt1shopandspeak"
          minSdk 26
@@ -59,7 +58,7 @@ plugins {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
 
