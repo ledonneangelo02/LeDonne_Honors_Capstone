@@ -24,7 +24,6 @@ import java.util.Objects;
 
 public class ProductDisplay extends AppCompatActivity {
 
-
     String Rez;
     String [] recordCols;
     boolean found_flag = false;
