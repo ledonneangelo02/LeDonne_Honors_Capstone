@@ -6,3 +6,5 @@
 
 # **Speak and Seek** 
 &nbsp;&nbsp;is an Android application that is designed to assist visually impaired individuals with their shopping needs. Speak and Seek implements the convenience of a smartphone with the lightening fast features of the Mainframe 
+
+# **API Information**

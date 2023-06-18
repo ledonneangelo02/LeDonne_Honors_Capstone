@@ -38,22 +38,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**Check to make sure we have all the permissions needed to perform the actions
-        inside of the application */
+        //Check to make sure we have all the permissions needed to perform the action inside of the application
         if(!checkPermission()){
             requestPermission();
         }
 
+        //Initiate the TextToSpeech Object, and begin speaking to the user to instruct them what to do
         Hello();
 
-
+        //Listen for the button to be clicked and we can move passed the Main page
         btnSend = findViewById(R.id.WelcButton);
         btnSend.setOnClickListener(v -> AppWelcome());
 
     }
 
-    /** This Method is simple, it passes the work onto the SpeechToText Activity since that's where we
-     *      would like the user to interact with the app interface */
+    /**
+     * This method is simple, it passes the work onto the SpeechToText Activity since that's where we
+     *      would like the user to interact with the app interface
+     */
     public void AppWelcome(){
 
         if(txtTspch != null ){ txtTspch.shutdown(); }
@@ -63,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     /**
-     * This method will check to make sure we have all the permissions needed to run the app
-     *   and it will return a bool of true or false, if we have ALL the permissions then we'll return
-     *   true, otherwise we will return false.
-    */
+     * This method is Responsible for Checking the Device Permissions before attempting to use them
+     *
+     * @return boolean : True if all the permissions we need are granted, False if we are missing any
+     *
+     */
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(), ACCESS_FINE_LOCATION);
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
@@ -77,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         return
                 result == PackageManager.PERMISSION_GRANTED &&
-                        result1 == PackageManager.PERMISSION_GRANTED &&
-                        result2 == PackageManager.PERMISSION_GRANTED &&
-                        result3 == PackageManager.PERMISSION_GRANTED;
+                result1 == PackageManager.PERMISSION_GRANTED &&
+                result2 == PackageManager.PERMISSION_GRANTED &&
+                result3 == PackageManager.PERMISSION_GRANTED;
     }
 
     /** This method is responsible for requesting the permissions we don't currently have. */
@@ -101,10 +103,12 @@ public class MainActivity extends AppCompatActivity {
                 //Ask the user to pick an option
                 new CountDownTimer(3000, 1000){
                     public void onFinish(){
-                        txtTspch.speak("Hello! Please tap the Microphone icon on your screen to start giving commands!", TextToSpeech.QUEUE_FLUSH, null, null);
+                        txtTspch.speak("Welcome to Shop and Speak!", TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                     @Override
-                    public void onTick(long l) {} }.start();
+                    public void onTick(long l){}
+
+                }.start();
             }
         });
         txtTspch.shutdown();
