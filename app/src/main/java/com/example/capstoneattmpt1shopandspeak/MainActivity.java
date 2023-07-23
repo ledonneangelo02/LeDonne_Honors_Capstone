@@ -29,6 +29,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     Button btnSend; //Button used to open the camera
+    Button OptButton;
     TextToSpeech txtTspch; //TextToSpeech Object so we can allow the app to talk to the user
 
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Hello();
 
         //Listen for the button to be clicked and we can move passed the Main page
+        OptButton = findViewById(R.id.Opts);
         btnSend = findViewById(R.id.WelcButton);
         btnSend.setOnClickListener(v -> AppWelcome());
 
