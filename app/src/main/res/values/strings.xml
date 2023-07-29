@@ -1,7 +1,7 @@
 <resources>
 
 
-    <string name="app_name">Speak and Seek</string>
+    <string name="app_name">Speak &amp; Seek</string>
     <string name="open_camera">Open Camera</string>
     <string name="title_activity_cam">CamActivity</string>
     <string name="barcode_text">Barcode Text</string>
@@ -14,7 +14,7 @@
     <string name="return_to_camera">Return to Camera</string>
     <string name="Mic">Microphone</string>
     <string name="TGH">Text goes Here</string>
-    <string name="Welc_Button">Get Started!</string>
+    <string name="BarCodeText">Barcode Scanner</string>
     <string name="app_logo">Application logo</string>
     <string name="opts">OPTIONS</string>
 

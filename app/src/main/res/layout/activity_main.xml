@@ -3,33 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+        <Button
+            android:id="@+id/OptionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/opts"
+            android:textSize="14pt"
+            />
 
         <TextView
             android:id="@+id/AppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_below="@+id/OptionButton"
             android:text="@string/app_name"
+            android:textAllCaps="true"
             android:textSize="20pt"
-            android:textColor="@color/black"
-            />
+            android:textStyle="bold"
+            android:textColor="@color/black" />
 
         <Button
-            android:id="@+id/WelcButton"
+            android:id="@+id/BCButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/AppName"
             android:layout_centerHorizontal="true"
-            android:text="@string/Welc_Button"
+            android:text="@string/BarCodeText"
             android:textAllCaps="false"
-            android:textSize="32sp" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/opts"
-            android:textSize="32sp"/>
+            android:textSize="18pt" />
 
 </RelativeLayout>
