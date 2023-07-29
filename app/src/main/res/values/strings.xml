@@ -14,7 +14,11 @@
     <string name="return_to_camera">Return to Camera</string>
     <string name="Mic">Microphone</string>
     <string name="TGH">Text goes Here</string>
+<<<<<<< HEAD
     <string name="BarCodeText">Barcode Scanner</string>
+=======
+    <string name="BarScan">BARCODE SCANNER</string>
+>>>>>>> be13738349e8c4186ba2d79449dd702a4a1f889b
     <string name="app_logo">Application logo</string>
     <string name="opts">OPTIONS</string>
 

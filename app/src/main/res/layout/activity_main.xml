@@ -22,19 +22,54 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/OptionButton"
             android:text="@string/app_name"
+<<<<<<< HEAD
             android:textAllCaps="true"
             android:textSize="20pt"
             android:textStyle="bold"
             android:textColor="@color/black" />
+=======
+            android:textSize="30pt"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            />
+        <Button
+            android:id="@+id/Opts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/AppName"
+            android:text="@string/opts"
+            android:textSize="40sp"
+        />
+>>>>>>> be13738349e8c4186ba2d79449dd702a4a1f889b
 
         <Button
             android:id="@+id/BCButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/AppName"
+            android:layout_below="@+id/space1"
             android:layout_centerHorizontal="true"
+<<<<<<< HEAD
             android:text="@string/BarCodeText"
             android:textAllCaps="false"
             android:textSize="18pt" />
+=======
+            android:text="@string/BarScan"
+            android:textAllCaps="false"
+            android:textSize="45sp" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/micpic"
+            android:layout_below="@+id/WelcButton"
+            android:layout_centerHorizontal="true" />
+        <Space
+            android:id="@+id/space1"
+            android:layout_width="match_parent"
+            android:layout_height="12pt"
+            android:layout_below="@+id/Opts"
+                />
+
+>>>>>>> be13738349e8c4186ba2d79449dd702a4a1f889b
 
 </RelativeLayout>
