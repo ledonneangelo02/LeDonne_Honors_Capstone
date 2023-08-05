@@ -1,30 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OptionsMenu">
 
     <TextView
+        android:id="@+id/ScreenTitleOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        android:text="@string/options_menu"
+        android:textSize="25pt"
+        android:textStyle="bold"
+        />
+    <TextView
         android:id="@+id/TextToSpeechText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_below="@+id/ScreenTitleOptions"
         android:textColor="@color/black"
         android:text="@string/text_to_speech"
         android:textStyle="bold"
         android:textSize="20pt"
+        android:textAlignment="center"
         />
 
-    <ToggleButton
+    <Switch
         android:id="@+id/TextToSpeechToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/TextToSpeechText"
+        android:layout_marginTop="20dp"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:checked="true"
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        />
+    <TextView
+        android:id="@+id/TitleColorScheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/TextToSpeechToggle"
+        android:textColor="@color/black"
+        android:text="@string/color_scheme"
+        android:textSize="20pt"
+        android:textStyle="bold"
         />
 
-
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TitleColorScheme"
+        android:layout_centerHorizontal="true"
+        android:entries="@array/ColorScheme"
+        />
 
 </RelativeLayout>
