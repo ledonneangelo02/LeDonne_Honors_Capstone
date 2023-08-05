@@ -1,7 +1,7 @@
 <resources>
 
 
-    <string name="app_name">Speak &amp; Seek</string>
+    <string name="app_name">Speak &amp;\nSeek</string>
     <string name="open_camera">Open Camera</string>
     <string name="title_activity_cam">CamActivity</string>
     <string name="barcode_text">Barcode Text</string>
@@ -14,13 +14,10 @@
     <string name="return_to_camera">Return to Camera</string>
     <string name="Mic">Microphone</string>
     <string name="TGH">Text goes Here</string>
-<<<<<<< HEAD
-    <string name="BarCodeText">Barcode Scanner</string>
-=======
-    <string name="BarScan">BARCODE SCANNER</string>
->>>>>>> be13738349e8c4186ba2d79449dd702a4a1f889b
+    <string name="BarCodeText">BARCODE SCANNER</string>
     <string name="app_logo">Application logo</string>
     <string name="opts">OPTIONS</string>
-
+    <string name="TxtReader">TEXT READER</string>
+    <string name="SpeakACommand">SPEAK A COMMAND</string>
 
 </resources>
