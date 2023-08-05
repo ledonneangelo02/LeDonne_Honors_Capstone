@@ -20,5 +20,6 @@
     <string name="TxtReader">TEXT READER</string>
     <string name="SpeakACommand">SPEAK A COMMAND</string>
     <string name="title_activity_options_menu">OptionsMenu</string>
+    <string name="text_to_speech">Text To Speech</string>
 
 </resources>
