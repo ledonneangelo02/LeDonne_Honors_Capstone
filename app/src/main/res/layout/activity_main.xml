@@ -2,8 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -57,13 +57,14 @@
             android:textSize="15pt"/>
 
         <Button
-        android:text="@string/SpeakACommand"
-        android:drawableLeft="@drawable/micpic"
-        android:drawablePadding="10dp"
-        android:background="@android:color/transparent"
-        android:textColor="@android:color/black"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/TxtReadButton"    />
+            android:text="@string/SpeakACommand"
+            android:background="@android:color/holo_purple"
+            android:textColor="@android:color/white"
+            android:textSize="15pt"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/TxtReadButton" />
+
 
 </RelativeLayout>
