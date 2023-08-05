@@ -19,5 +19,6 @@
     <string name="opts">OPTIONS</string>
     <string name="TxtReader">TEXT READER</string>
     <string name="SpeakACommand">SPEAK A COMMAND</string>
+    <string name="title_activity_options_menu">OptionsMenu</string>
 
 </resources>

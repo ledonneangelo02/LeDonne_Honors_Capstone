@@ -57,6 +57,7 @@
             android:textSize="15pt"/>
 
         <Button
+            android:id="@+id/SpkACmmd"
             android:text="@string/SpeakACommand"
             android:background="@android:color/holo_purple"
             android:textColor="@android:color/white"

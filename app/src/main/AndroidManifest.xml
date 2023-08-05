@@ -25,6 +25,11 @@
         android:theme="@style/Theme.CapstoneAttmpt1ShopAndSpeak"
         tools:targetApi="31">
         <activity
+            android:name=".OptionsMenu"
+            android:exported="false"
+            android:label="@string/title_activity_options_menu"
+            android:theme="@style/Theme.CapstoneAttmpt1ShopAndSpeak" />
+        <activity
             android:name=".SpeechText"
             android:exported="false" />
         <activity
