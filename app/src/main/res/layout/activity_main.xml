@@ -1,52 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+
+        <Button
+            android:id="@+id/OptionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/opts"
+            android:textSize="15pt"
+            />
+
+        <Space
+            android:id="@+id/space1"
+            android:layout_width="match_parent"
+            android:layout_height="10pt"
+            android:layout_above="@+id/AppName"
+            android:layout_below="@+id/OptionButton"
+            />
 
         <TextView
             android:id="@+id/AppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_below="@+id/OptionButton"
             android:text="@string/app_name"
-            android:textSize="30pt"
+            android:textAllCaps="true"
+            android:textSize="25pt"
+            android:textStyle="bold"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            />
-        <Button
-            android:id="@+id/Opts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/AppName"
-            android:text="@string/opts"
-            android:textSize="40sp"
-        />
+            android:textColor="@color/black" />
 
         <Button
-            android:id="@+id/WelcButton"
+            android:id="@+id/BCButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/space1"
+            android:layout_below="@+id/AppName"
             android:layout_centerHorizontal="true"
-            android:text="@string/BarScan"
+            android:text="@string/BarCodeText"
             android:textAllCaps="false"
-            android:textSize="45sp" />
-        <ImageButton
+            android:textSize="15pt" />
+
+        <Button
+            android:id="@+id/TxtReadButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/micpic"
-            android:layout_below="@+id/WelcButton"
-            android:layout_centerHorizontal="true" />
-        <Space
-            android:id="@+id/space1"
-            android:layout_width="match_parent"
-            android:layout_height="12pt"
-            android:layout_below="@+id/Opts"
-                />
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/BCButton"
+            android:text="@string/TxtReader"
+            android:textSize="15pt"/>
+
+        <Button
+            android:id="@+id/SpkACmmd"
+            android:text="@string/SpeakACommand"
+            android:background="@android:color/holo_purple"
+            android:textColor="@android:color/white"
+            android:textSize="15pt"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/TxtReadButton" />
 
 
 </RelativeLayout>
