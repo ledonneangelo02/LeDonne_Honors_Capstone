@@ -55,11 +55,30 @@
         />
 
     <Spinner
+        android:id="@+id/ColorSchemeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TitleColorScheme"
         android:layout_centerHorizontal="true"
-        android:entries="@array/ColorScheme"
+        />
+
+    <Button
+        android:id="@+id/ReturnHomeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ColorSchemeSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="@string/MainMenuStr"
+        android:textSize="15pt"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ReturnHomeBtn"
+        android:layout_centerHorizontal="true"
+        android:text="@string/SpeakACommand"
+        android:textSize="15pt"
         />
 
 </RelativeLayout>

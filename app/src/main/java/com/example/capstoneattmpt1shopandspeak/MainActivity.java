@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         OptButton = findViewById(R.id.OptionButton);
         BarCodeButton = findViewById(R.id.BCButton);
         BarCodeButton.setOnClickListener(v -> AppWelcome());
+        OptButton.setOnClickListener(v -> OpenOptionsMenu());
 
     }
 
@@ -66,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(SpeechToText);
     }
 
+    public void OpenOptionsMenu(){
+        Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
+        startActivity(OpenOptions);
+    }
 
     /**
      * This method is Responsible for Checking the Device Permissions before attempting to use them
