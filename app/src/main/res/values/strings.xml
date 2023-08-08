@@ -1,7 +1,7 @@
 <resources>
 
 
-    <string name="app_name">Speak &amp;\nSeek</string>
+    <string name="app_name">Shop &amp; Speak</string>
     <string name="open_camera">Open Camera</string>
     <string name="title_activity_cam">CamActivity</string>
     <string name="barcode_text">Barcode Text</string>
@@ -17,12 +17,13 @@
     <string name="BarCodeText">BARCODE SCANNER</string>
     <string name="app_logo">Application logo</string>
     <string name="opts">OPTIONS</string>
-    <string name="TxtReader">TEXT READER</string>
+    <string name="TxtReader">TEXT\nREADER</string>
     <string name="SpeakACommand">SPEAK A COMMAND</string>
     <string name="title_activity_options_menu">OptionsMenu</string>
     <string name="text_to_speech">Text To Speech (Off/On):</string>
     <string name="options_menu"><u>Options Menu</u>:</string>
     <string name="color_scheme">Color Scheme:</string>
     <string name="MainMenuStr">Return To Main Menu</string>
+    <string name="application_logo">Application Logo</string>
 
 </resources>

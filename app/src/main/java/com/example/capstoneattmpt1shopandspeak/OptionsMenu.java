@@ -1,20 +1,15 @@
 package com.example.capstoneattmpt1shopandspeak;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.preference.PreferenceDataStore;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import java.util.prefs.Preferences;
 
-public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PreferenceDataStore {
+public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,16 +17,16 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_options_menu);
 
         //ColorScheme for different visual impairments
-        String[] ColorScheme = { "Black on White", "High Contrast", "White on Black"};
+        String[] ColorScheme = {"Black on White", "High Contrast", "White on Black"};
 
+      /*
         //User Preferences so when they open the app again, it will stay in a consistent state
-        SharedPreferences settings = getSharedPreferences("UserInfo",  MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("TTS", true);
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(R.string.preference_file_key,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("ColorScheme", ColorScheme[2]);
+        editor.putBoolean("TTS", true);
         editor.apply();
-
-
+    */
 
         Spinner Schemespin = findViewById(R.id.ColorSchemeSpinner);
 
@@ -52,15 +47,5 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
-
-    @Override
-    public void putString(String key, @Nullable String value) {
-        PreferenceDataStore.super.putString(key, value);
     }
 }

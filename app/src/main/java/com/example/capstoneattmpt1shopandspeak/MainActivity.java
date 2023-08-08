@@ -20,7 +20,7 @@ import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
 
-/**
+/*
 *    This Class is the 'Main' class of the application, it will
 *    drive the opening of the camera as well as the barcode scanning API.
 *    After the barcode has been scanned, the data will be passed onto the
@@ -54,25 +54,7 @@ public class MainActivity extends AppCompatActivity {
         OptButton.setOnClickListener(v -> OpenOptionsMenu());
 
     }
-
-    /**
-     * This method is simple, it passes the work onto the SpeechToText Activity since that's where we
-     *      would like the user to interact with the app interface
-     */
-    public void AppWelcome(){
-
-        if(txtTspch != null ){ txtTspch.shutdown(); }
-
-        Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
-        startActivity(SpeechToText);
-    }
-
-    public void OpenOptionsMenu(){
-        Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
-        startActivity(OpenOptions);
-    }
-
-    /**
+    /*
      * This method is Responsible for Checking the Device Permissions before attempting to use them
      *
      * @return boolean : True if all the permissions we need are granted, False if we are missing any
@@ -86,18 +68,23 @@ public class MainActivity extends AppCompatActivity {
 
         return
                 result == PackageManager.PERMISSION_GRANTED &&
-                result1 == PackageManager.PERMISSION_GRANTED &&
-                result2 == PackageManager.PERMISSION_GRANTED &&
-                result3 == PackageManager.PERMISSION_GRANTED;
+                        result1 == PackageManager.PERMISSION_GRANTED &&
+                        result2 == PackageManager.PERMISSION_GRANTED &&
+                        result3 == PackageManager.PERMISSION_GRANTED;
     }
 
-    /** This method is responsible for requesting the permissions we don't currently have. */
+    /*
+     * This method is responsible for requesting the permissions we don't currently have.
+    */
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, CAMERA, INTERNET, RECORD_AUDIO}, 1);
     }
 
-
-    /** This function triggers a TextToSpeech action that will welcome the person to the app to let
+    /*
+     * This method is simple, it passes the work onto the SpeechToText Activity since that's where we
+     *      would like the user to interact with the app interface
+     *
+     * This function triggers a TextToSpeech action that will welcome the person to the app to let
      *      the user know they are at the welcome screen and we are ready for them to interact
      */
     public void Hello(){
@@ -105,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         txtTspch = new TextToSpeech(getApplicationContext(), i -> {
             // if No error is found then TextToSpeech can perform the translation
             if(i != TextToSpeech.ERROR){
+
                 // To Choose language of speech
                 txtTspch.setLanguage(Locale.getDefault());
                 //Ask the user to pick an option
@@ -120,5 +108,21 @@ public class MainActivity extends AppCompatActivity {
         });
         txtTspch.shutdown();
     }
+
+
+    public void AppWelcome(){
+
+        if(txtTspch != null ){ txtTspch.shutdown(); }
+
+        Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
+        startActivity(SpeechToText);
+    }
+
+
+    public void OpenOptionsMenu(){
+        Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
+        startActivity(OpenOptions);
+    }
+
 }
 

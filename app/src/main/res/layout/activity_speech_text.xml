@@ -55,17 +55,16 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="100sp" />
+            android:layout_height="20sp" />
 
         <Button
             android:id="@+id/buttonCam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/light_blue_A200"
+
             android:text="@string/open_camera"
             android:textAllCaps="false"
             android:textSize="18pt"
-            android:textColor="@color/black"
             android:layout_gravity="center" />
 
     </LinearLayout>

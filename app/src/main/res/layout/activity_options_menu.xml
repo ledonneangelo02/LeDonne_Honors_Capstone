@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ColorSchemeSpinner"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:text="@string/MainMenuStr"
         android:textSize="15pt"
         />
