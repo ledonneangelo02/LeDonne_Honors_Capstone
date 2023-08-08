@@ -56,8 +56,9 @@
 
     <Spinner
         android:id="@+id/ColorSchemeSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/TitleColorScheme"
         android:layout_centerHorizontal="true"
         />
@@ -68,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ColorSchemeSpinner"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:text="@string/MainMenuStr"
         android:textSize="15pt"
         />

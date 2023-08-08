@@ -1,24 +1,37 @@
 package com.example.capstoneattmpt1shopandspeak;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceDataStore;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+import java.util.prefs.Preferences;
+
+public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItemSelectedListener, PreferenceDataStore {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_menu);
 
+        //ColorScheme for different visual impairments
+        String[] ColorScheme = { "Black on White", "High Contrast", "White on Black"};
 
-        String[] ColorScheme = { "Black on White", "High Contrast",
-                "Interview prep", "Algorithms",
-                "DSA with java", "OS" };
+        //User Preferences so when they open the app again, it will stay in a consistent state
+        SharedPreferences settings = getSharedPreferences("UserInfo",  MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("TTS", true);
+        editor.putString("ColorScheme", ColorScheme[2]);
+        editor.apply();
+
+
 
         Spinner Schemespin = findViewById(R.id.ColorSchemeSpinner);
 
@@ -44,5 +57,10 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    @Override
+    public void putString(String key, @Nullable String value) {
+        PreferenceDataStore.super.putString(key, value);
     }
 }
