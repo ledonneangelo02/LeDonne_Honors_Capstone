@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Hello();
 
         //Listen for the button to be clicked and we can move passed the Main page
-        OptButton = findViewById(R.id.OptionButton);
+        OptButton = findViewById(R.id.OptionsButton);
         BarCodeButton = findViewById(R.id.BCButton);
         BarCodeButton.setOnClickListener(v -> AppWelcome());
         OptButton.setOnClickListener(v -> OpenOptionsMenu());

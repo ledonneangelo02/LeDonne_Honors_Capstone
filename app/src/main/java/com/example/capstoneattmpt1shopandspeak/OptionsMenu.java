@@ -1,15 +1,19 @@
 package com.example.capstoneattmpt1shopandspeak;
 
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class OptionsMenu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,35 +21,23 @@ public class OptionsMenu extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_options_menu);
 
         //ColorScheme for different visual impairments
-        String[] ColorScheme = {"Black on White", "High Contrast", "White on Black"};
+        List<String> ColorScheme = new ArrayList<String>();
+        ColorScheme.add("Black on White");
+        ColorScheme.add("High Contrast");
+        ColorScheme.add("White on Black");
 
-      /*
-        //User Preferences so when they open the app again, it will stay in a consistent state
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(R.string.preference_file_key,Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("ColorScheme", ColorScheme[2]);
-        editor.putBoolean("TTS", true);
-        editor.apply();
-    */
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+          this, android.R.layout.simple_spinner_item, ColorScheme);
 
-        Spinner Schemespin = findViewById(R.id.ColorSchemeSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spinner = (Spinner) findViewById(R.id.ColorSchemeSpinner);
+        spinner.setAdapter(adapter);
 
-        Schemespin.setOnItemSelectedListener(this);
-
-        ArrayAdapter<String> ad = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ColorScheme);
-
-        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        Schemespin.setAdapter(ad);
+        Button RTM = findViewById(R.id.ReturnHomeBtn);
+        RTM.setOnClickListener(v -> ReturnHome());
     }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+    private void ReturnHome(){
+        Intent ReturnHome = new Intent(OptionsMenu.this, MainActivity.class);
+        startActivity(ReturnHome);
     }
 }
