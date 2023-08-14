@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
@@ -61,7 +62,10 @@
             android:id="@+id/buttonCam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/open_camera"
             android:textAllCaps="false"
             android:textSize="18pt"

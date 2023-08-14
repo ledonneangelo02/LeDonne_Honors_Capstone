@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -36,6 +36,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30dp"
             android:layout_below="@+id/AppLogo"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/opts"
             android:textSize="15pt" />
         <Button
@@ -44,6 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/OptionsButton"
             android:layout_centerHorizontal="true"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/BarCodeText"
             android:textAllCaps="false"
             android:textSize="15pt" />
@@ -54,6 +62,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/BCButton"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/TxtReader"
             android:textSize="15pt"/>
 
@@ -64,6 +76,10 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/TxtReadButton"
             android:layout_marginTop="30dp"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/SpeakACommand"
             android:textSize="15pt" />
 

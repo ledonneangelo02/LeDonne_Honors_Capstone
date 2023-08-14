@@ -20,10 +20,11 @@
     <string name="TxtReader">TEXT\nREADER</string>
     <string name="SpeakACommand">SPEAK A COMMAND</string>
     <string name="title_activity_options_menu">OptionsMenu</string>
-    <string name="text_to_speech">Text To Speech (Off/On):</string>
+    <string name="text_to_speech">Text To Speech\n(Off/On):</string>
     <string name="options_menu"><u>Options Menu</u>:</string>
     <string name="color_scheme">Color Scheme:</string>
     <string name="MainMenuStr">Return To Main Menu</string>
     <string name="application_logo">Application Logo</string>
+    <string name="save_and_return">Save and Return</string>
 
 </resources>

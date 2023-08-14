@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".OptionsMenu">
 
     <TextView
@@ -25,7 +26,7 @@
         android:textColor="@color/black"
         android:text="@string/text_to_speech"
         android:textStyle="bold"
-        android:textSize="20pt"
+        android:textSize="18pt"
         android:textAlignment="center"
         />
 
@@ -36,8 +37,8 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/TextToSpeechText"
         android:layout_marginTop="20dp"
-        android:scaleX="3"
-        android:scaleY="3"
+        android:scaleX="2"
+        android:scaleY="2"
         android:checked="true"
         tools:ignore="UseSwitchCompatOrMaterialXml"
         />
@@ -50,7 +51,7 @@
         android:layout_below="@+id/TextToSpeechToggle"
         android:textColor="@color/black"
         android:text="@string/color_scheme"
-        android:textSize="20pt"
+        android:textSize="18pt"
         android:textStyle="bold"
         />
 
@@ -70,14 +71,23 @@
         android:layout_below="@+id/ColorSchemeSpinner"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:text="@string/MainMenuStr"
+        app:strokeColor="@color/black"
+        app:strokeWidth="4dp"
+        app:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:text="@string/save_and_return"
         android:textSize="15pt"
         />
     <Button
+        android:id="@+id/SpeakACommand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ReturnHomeBtn"
         android:layout_centerHorizontal="true"
+        app:strokeColor="@color/black"
+        app:strokeWidth="4dp"
+        app:backgroundTint="@color/white"
+        android:textColor="@color/black"
         android:text="@string/SpeakACommand"
         android:textSize="15pt"
         />
