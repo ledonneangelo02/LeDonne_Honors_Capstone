@@ -11,14 +11,25 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.renderscript.ScriptGroup;
 import android.speech.tts.TextToSpeech;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Locale;
+import java.util.Objects;
 
 /*
 *    This Class is the 'Main' class of the application, it will
@@ -31,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
     Button BarCodeButton; //Button used to open the camera
     Button OptButton;
     TextToSpeech txtTspch; //TextToSpeech Object so we can allow the app to talk to the user
-
+    String Rez;
+    String [] recordCols;
+    boolean found_flag = false;
 
     //'When this Activity opens'
     @Override
@@ -45,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Initiate the TextToSpeech Object, and begin speaking to the user to instruct them what to do
+        CheckSettings();
         Hello();
 
         //Listen for the button to be clicked and we can move passed the Main page
@@ -112,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void AppWelcome(){
 
-        if(txtTspch != null ){ txtTspch.shutdown(); }
+        if(txtTspch != null){ txtTspch.shutdown(); }
 
         Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
         startActivity(SpeechToText);
@@ -122,6 +136,40 @@ public class MainActivity extends AppCompatActivity {
     public void OpenOptionsMenu(){
         Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
         startActivity(OpenOptions);
+    }
+
+    private void CheckSettings() {
+
+        String fileST = getFilesDir() + "/" + "settings.txt";
+
+        File file = new File(fileST);
+
+        if (file.exists()) {
+            FileInputStream fis;
+            String textContent;
+
+            try {
+                fis = new FileInputStream(file);
+                BufferedReader br = new BufferedReader(new FileReader(fileST));
+
+                textContent = br.readLine();
+
+                while (textContent != null) {
+
+                    if (Objects.equals("Theme:", textContent.substring(0, 5))) {
+
+                        Toast.makeText(this, textContent.substring(6, 15), Toast.LENGTH_LONG).show();
+
+                        fis.close();
+                    }
+                    textContent = br.readLine();
+                }
+                fis.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }
