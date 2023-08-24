@@ -1,6 +1,7 @@
 package com.example.capstoneattmpt1shopandspeak;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -23,13 +25,14 @@ public class OptionsMenu extends AppCompatActivity {
     String selectedTheme = "Black on White";
     String TTSOn;
     boolean TextToSpeechOn;
-    String fileST = getFilesDir() + "/" + "settings.txt";
+    //String fileST = getFilesDir() + "/" + "settings.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_menu);
 
+        Log.i("In Options Now", "Hello World");
         //ColorScheme for different visual impairments
         List<String> ColorScheme = new ArrayList<>();
         ColorScheme.add("Black on White");
@@ -76,13 +79,17 @@ public class OptionsMenu extends AppCompatActivity {
         }else{
             TTSOn = "No";
         }
-
         try {
-            OutputStreamWriter outStream = new OutputStreamWriter(this.openFileOutput(fileST, Context.MODE_PRIVATE));
-            outStream.write("Theme: " + selectedTheme);
-            outStream.write("TextToSpeech: " + TTSOn);
+            FileOutputStream outStream = openFileOutput("Records.txt", Context.MODE_PRIVATE);
+            outStream.write(("Theme: " + selectedTheme).getBytes());
+            outStream.write(("TextToSpeech: " + TTSOn).getBytes());
+            outStream.close();
         }catch (IOException e){
+
             Log.e("Exception:", "File write Failed " + e);
+
         }
+
     }
-}
+
+    }
