@@ -25,7 +25,7 @@ import java.util.Locale;
 public class SpeechText extends AppCompatActivity {
 
     EditText Textedit;  //A EditText object that stores the string spoken interpreted by Android SpeechRecognizer
-    Button btnSend;     //Button
+    Button GoHome;     //Button
     ImageView mic;      //Clickable Image object
     int CameraConfScore = 0;    //How confident we are in what the user is asking for
     String[] CameraArray = new String[]{"USE", "OPEN", "CAMERA", "SCAN", "SCANNER", "BARCODE"};
@@ -81,10 +81,10 @@ public class SpeechText extends AppCompatActivity {
         mic.setOnClickListener(v -> ToggleMic());
 
         //Setting btnSend to the button in the xml
-        btnSend = findViewById(R.id.buttonCam);
+        GoHome = findViewById(R.id.HomeButton);
 
         //When the button is clicked, call the openScanner() function
-        btnSend.setOnClickListener(v -> openScanner());
+        GoHome.setOnClickListener(v -> openScanner());
     }
 
     @Override

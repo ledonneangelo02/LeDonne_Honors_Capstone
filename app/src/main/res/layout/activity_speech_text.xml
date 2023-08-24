@@ -35,7 +35,7 @@
             android:id="@+id/buttonMic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="50dp"
             android:layout_below="@+id/TEdit"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/Mic"
@@ -44,6 +44,7 @@
             />
 
         <TextView
+            android:id="@+id/Instruction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/buttonMic"
@@ -53,6 +54,17 @@
             android:text="@string/click_to_speak"
             android:textSize="20pt"
 
+            />
+
+        <Button
+            android:id="@+id/HomeButton"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/Instruction"
+            android:text="@string/MainMenuStr"
+            android:textSize="15pt"
             />
 
 </RelativeLayout>
