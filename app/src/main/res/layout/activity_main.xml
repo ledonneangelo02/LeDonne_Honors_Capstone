@@ -41,7 +41,8 @@
             app:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:text="@string/opts"
-            android:textSize="15pt" />
+            android:textSize="15pt"
+            android:textStyle="bold"/>
         <Button
             android:id="@+id/BCButton"
             android:layout_width="wrap_content"
@@ -54,7 +55,8 @@
             android:textColor="@color/black"
             android:text="@string/BarCodeText"
             android:textAllCaps="false"
-            android:textSize="15pt" />
+            android:textSize="15pt"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/TxtReadButton"
@@ -67,7 +69,8 @@
             app:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:text="@string/TxtReader"
-            android:textSize="15pt"/>
+            android:textSize="15pt"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/SpkACmmd"
@@ -81,7 +84,8 @@
             app:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:text="@string/SpeakACommand"
-            android:textSize="15pt" />
-
+            android:textSize="15pt"
+            android:textStyle="bold"
+            />
 
 </RelativeLayout>
