@@ -1,71 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-        <Button
-            android:id="@+id/OptionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/opts"
-            android:textSize="15pt"
-            />
 
-        <Space
-            android:id="@+id/space1"
-            android:layout_width="match_parent"
-            android:layout_height="10pt"
-            android:layout_above="@+id/AppName"
-            android:layout_below="@+id/OptionButton"
-            />
 
         <TextView
             android:id="@+id/AppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/OptionButton"
             android:text="@string/app_name"
             android:textAllCaps="true"
-            android:textSize="25pt"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="23pt"
+            android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/AppLogo"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_below="@+id/AppName"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/application_logo"/>
+
+        <Button
+            android:id="@+id/OptionsButton"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@+id/AppLogo"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:text="@string/opts"
+            android:textSize="15pt" />
         <Button
             android:id="@+id/BCButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/AppName"
+            android:layout_below="@+id/OptionsButton"
             android:layout_centerHorizontal="true"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/BarCodeText"
             android:textAllCaps="false"
             android:textSize="15pt" />
 
         <Button
             android:id="@+id/TxtReadButton"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/BCButton"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/TxtReader"
             android:textSize="15pt"/>
 
         <Button
             android:id="@+id/SpkACmmd"
-            android:text="@string/SpeakACommand"
-            android:background="@android:color/holo_purple"
-            android:textColor="@android:color/white"
-            android:textSize="15pt"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/TxtReadButton" />
+            android:layout_below="@+id/TxtReadButton"
+            android:layout_marginTop="30dp"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:text="@string/SpeakACommand"
+            android:textSize="15pt" />
 
 
 </RelativeLayout>
