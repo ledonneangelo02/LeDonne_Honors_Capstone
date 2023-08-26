@@ -20,7 +20,7 @@
     <string name="TxtReader">TEXT\nREADER</string>
     <string name="SpeakACommand">SPEAK A COMMAND</string>
     <string name="title_activity_options_menu">OptionsMenu</string>
-    <string name="text_to_speech">Text To Speech\n(Off/On):</string>
+    <string name="text_to_speech">Text To Speech (Off/On):</string>
     <string name="options_menu"><u>Options Menu</u>:</string>
     <string name="color_scheme">Color Scheme:</string>
     <string name="MainMenuStr">Return To Main Menu</string>
@@ -28,5 +28,21 @@
     <string name="save_and_return">Save and Return</string>
     <string name="Wait_time">Please Wait. . .</string>
     <string name="click_to_speak">(Click To Speak)</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>

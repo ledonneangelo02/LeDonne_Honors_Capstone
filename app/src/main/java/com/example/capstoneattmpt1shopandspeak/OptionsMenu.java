@@ -4,6 +4,7 @@ package com.example.capstoneattmpt1shopandspeak;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,7 +27,9 @@ public class OptionsMenu extends AppCompatActivity {
     String selectedTheme = "Black on White";
     String TTSOn;
     boolean TextToSpeechOn;
-    //String fileST = getFilesDir() + "/" + "settings.txt";
+
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Switch TTS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,42 +58,44 @@ public class OptionsMenu extends AppCompatActivity {
         SpeakCommand.setOnClickListener(v -> OpenSpeakACommand());
 
         //Switch for TextToSpeech Toggling
-        Switch TTS = findViewById(R.id.TextToSpeechToggle);
+        TTS = findViewById(R.id.TextToSpeechToggle);
         TextToSpeechOn = TTS.isChecked();
 
         //Selected Theme string, so we can save the activity
         selectedTheme = spinner.getSelectedItem().toString();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        SharedPreferences fetchSP = getSharedPreferences("AppSettings",MODE_PRIVATE);
+        selectedTheme = fetchSP.getString("Theme","");
+        TextToSpeechOn = fetchSP.getBoolean("TTS",true);
+        if(TextToSpeechOn){
+            TTS.setChecked(true);
+        }else{
+            TTS.setChecked(false);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sp = getSharedPreferences("AppSettings", MODE_PRIVATE);
+        SharedPreferences.Editor spEdit = sp.edit();
+        spEdit.putString("Theme", selectedTheme.toString());
+        spEdit.putBoolean("TTS", TextToSpeechOn);
+        spEdit.apply();
+    }
+
     private void ReturnHome(){
-        SaveOptions();
         Intent ReturnHome = new Intent(OptionsMenu.this, MainActivity.class);
         startActivity(ReturnHome);
     }
 
     private void OpenSpeakACommand(){
-        SaveOptions();
         Intent SpeakCommands = new Intent(OptionsMenu.this, SpeechText.class);
         startActivity(SpeakCommands);
     }
 
-    private void SaveOptions(){
-        if(TextToSpeechOn){
-            TTSOn = "Yes";
-        }else{
-            TTSOn = "No";
-        }
-        try {
-            FileOutputStream outStream = openFileOutput("Records.txt", Context.MODE_PRIVATE);
-            outStream.write(("Theme: " + selectedTheme).getBytes());
-            outStream.write(("TextToSpeech: " + TTSOn).getBytes());
-            outStream.close();
-        }catch (IOException e){
-
-            Log.e("Exception:", "File write Failed " + e);
-
-        }
-
-    }
-
-    }
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Settings" android:textSize="20px">
+
+        <ListPreference
+            android:defaultValue="reply"
+            android:textSize="20px"
+            android:entries="@array/themes_entries"
+            android:entryValues="@array/themes_values"
+            android:key="reply"
+            android:title="@string/color_scheme" />
+
+
+        <SwitchPreferenceCompat
+            android:key="TextToSpeechOn"
+            android:title="@string/text_to_speech"
+            android:summaryOff="Text to Speech is OFF"
+            android:summaryOn="Text to Speech is ON"
+            android:defaultValue="true"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>
