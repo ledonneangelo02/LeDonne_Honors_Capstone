@@ -19,28 +19,25 @@ import java.util.List;
 public class OptionsMenu extends AppCompatActivity {
 
     String selectedTheme = "Black on White";
-    String TTSOn;
-    boolean TextToSpeechOn;
+    boolean TextToSpeechOn = true;
     SharedPreferences fetchSP, sp;
-
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Spinner spinner;
     Switch TTS;
+
+    ArrayAdapter<String> adapter;
+    List<String> ColorScheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_menu);
 
+
         //ColorScheme for different visual impairments
-        List<String> ColorScheme = new ArrayList<>();
+        ColorScheme = new ArrayList<>();
         ColorScheme.add("Black on White");
         ColorScheme.add("High Contrast");
         ColorScheme.add("White on Black");
-
-        //Spinner Adapter Boilerplate Code
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ColorScheme);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner spinner = (Spinner) findViewById(R.id.ColorSchemeSpinner);
 
         //Save and go back to home page
         Button RTM = findViewById(R.id.ReturnHomeBtn);
@@ -52,38 +49,43 @@ public class OptionsMenu extends AppCompatActivity {
 
         //Switch for TextToSpeech Toggling
         TTS = findViewById(R.id.TextToSpeechToggle);
-        TextToSpeechOn = TTS.isChecked();
 
-        //Selected Theme string, so we can save the activity
-        selectedTheme = spinner.getSelectedItem().toString();
+
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        //Spinner Adapter Boilerplate Code
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ColorScheme);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner = findViewById(R.id.ColorSchemeSpinner);
+        spinner.setAdapter(adapter);
 
-        fetchSP = this.getSharedPreferences("AppSettings",MODE_PRIVATE);
-        selectedTheme = fetchSP.getString("Theme","");
-        TextToSpeechOn = fetchSP.getBoolean("TTS",true);
-        if(TextToSpeechOn){
+        fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
+        selectedTheme = fetchSP.getString("Theme", "");
+
+        if(fetchSP.getBoolean("TTS", true)) {
             TTS.setChecked(true);
-        }else{
+        } else {
             TTS.setChecked(false);
         }
-
+        //Selected Theme string, so we can save the activity
+        selectedTheme = spinner.getSelectedItem().toString();
+        int spinnerPosition = adapter.getPosition(selectedTheme);
+        spinner.setSelection(spinnerPosition);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+    private void ReturnHome(){
+
+        TextToSpeechOn = TTS.isChecked();
+
         sp = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
         SharedPreferences.Editor spEdit = sp.edit();
         spEdit.putString("Theme", selectedTheme);
         spEdit.putBoolean("TTS", TextToSpeechOn);
         spEdit.apply();
-    }
 
-    private void ReturnHome(){
         Intent ReturnHome = new Intent(OptionsMenu.this, MainActivity.class);
         startActivity(ReturnHome);
     }

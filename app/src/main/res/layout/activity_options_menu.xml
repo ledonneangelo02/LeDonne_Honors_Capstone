@@ -40,7 +40,6 @@
         android:layout_marginTop="20dp"
         android:scaleX="2"
         android:scaleY="2"
-        android:checked="true"
         tools:ignore="UseSwitchCompatOrMaterialXml"
         />
     <TextView
