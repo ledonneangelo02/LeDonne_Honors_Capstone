@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(SpeechToText);
     }
 
-
     public void OpenOptionsMenu(){
         Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
         startActivity(OpenOptions);

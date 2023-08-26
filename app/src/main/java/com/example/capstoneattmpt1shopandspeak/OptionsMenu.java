@@ -2,22 +2,16 @@ package com.example.capstoneattmpt1shopandspeak;
 
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +21,7 @@ public class OptionsMenu extends AppCompatActivity {
     String selectedTheme = "Black on White";
     String TTSOn;
     boolean TextToSpeechOn;
+    SharedPreferences fetchSP, sp;
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch TTS;
@@ -36,7 +31,6 @@ public class OptionsMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_menu);
 
-        Log.i("In Options Now", "Hello World");
         //ColorScheme for different visual impairments
         List<String> ColorScheme = new ArrayList<>();
         ColorScheme.add("Black on White");
@@ -47,7 +41,6 @@ public class OptionsMenu extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ColorScheme);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = (Spinner) findViewById(R.id.ColorSchemeSpinner);
-        spinner.setAdapter(adapter);
 
         //Save and go back to home page
         Button RTM = findViewById(R.id.ReturnHomeBtn);
@@ -68,7 +61,8 @@ public class OptionsMenu extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        SharedPreferences fetchSP = getSharedPreferences("AppSettings",MODE_PRIVATE);
+
+        fetchSP = this.getSharedPreferences("AppSettings",MODE_PRIVATE);
         selectedTheme = fetchSP.getString("Theme","");
         TextToSpeechOn = fetchSP.getBoolean("TTS",true);
         if(TextToSpeechOn){
@@ -76,14 +70,15 @@ public class OptionsMenu extends AppCompatActivity {
         }else{
             TTS.setChecked(false);
         }
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences sp = getSharedPreferences("AppSettings", MODE_PRIVATE);
+        sp = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
         SharedPreferences.Editor spEdit = sp.edit();
-        spEdit.putString("Theme", selectedTheme.toString());
+        spEdit.putString("Theme", selectedTheme);
         spEdit.putBoolean("TTS", TextToSpeechOn);
         spEdit.apply();
     }
