@@ -8,13 +8,16 @@ import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.RECORD_AUDIO;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -24,7 +27,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /*
 *    This Class is the 'Main' class of the application, it will
@@ -34,12 +39,11 @@ import java.util.Objects;
 */
 public class MainActivity extends AppCompatActivity {
 
-    Button BarCodeButton; //Button used to open the camera
-    Button OptButton;
+    Button BarCodeButton,OptButton; //Button used to open the camera
     TextToSpeech txtTspch; //TextToSpeech Object so we can allow the app to talk to the user
-    String Rez;
-    String [] recordCols;
-    boolean found_flag = false;
+    String CurrentTheme;
+
+    boolean TextToSpeechOnOFF = true; //Text to speech is on by default
 
     //'When this Activity opens'
     @Override
@@ -52,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
             requestPermission();
         }
 
-        //Initiate the TextToSpeech Object, and begin speaking to the user to instruct them what to do
-        Hello();
-
         //Listen for the button to be clicked and we can move passed the Main page
         OptButton = findViewById(R.id.OptionsButton);
         BarCodeButton = findViewById(R.id.BCButton);
@@ -62,6 +63,21 @@ public class MainActivity extends AppCompatActivity {
         OptButton.setOnClickListener(v -> OpenOptionsMenu());
 
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        SharedPreferences fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
+        TextToSpeechOnOFF = fetchSP.getBoolean("TTS", true);
+        CurrentTheme = fetchSP.getString("Theme", "");
+
+        //Begin to Speak to the user only if the TTS setting is active (True)
+        if(TextToSpeechOnOFF){
+            Hello();
+        }
+    }
+
     /*
      * This method is Responsible for Checking the Device Permissions before attempting to use them
      *
@@ -74,11 +90,10 @@ public class MainActivity extends AppCompatActivity {
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), INTERNET);
         int result3 = ContextCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO);
 
-        return
-                result == PackageManager.PERMISSION_GRANTED &&
-                        result1 == PackageManager.PERMISSION_GRANTED &&
-                        result2 == PackageManager.PERMISSION_GRANTED &&
-                        result3 == PackageManager.PERMISSION_GRANTED;
+        return  result  == PackageManager.PERMISSION_GRANTED &&
+                result1 == PackageManager.PERMISSION_GRANTED &&
+                result2 == PackageManager.PERMISSION_GRANTED &&
+                result3 == PackageManager.PERMISSION_GRANTED;
     }
 
     /*

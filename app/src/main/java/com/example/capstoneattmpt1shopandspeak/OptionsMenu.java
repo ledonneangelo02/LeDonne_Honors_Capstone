@@ -1,7 +1,6 @@
 package com.example.capstoneattmpt1shopandspeak;
 
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,8 +21,6 @@ import java.util.List;
 public class OptionsMenu extends AppCompatActivity {
 
     String selectedTheme = "Black on White";
-    String NotSelectedTheme = "";
-    String NotSelectedTheme2 = "";
     boolean TextToSpeechOn = true;
     SharedPreferences fetchSP, sp;
     Spinner spinner;
@@ -35,7 +32,6 @@ public class OptionsMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_menu);
-
 
         //Save and go back to home page
         Button RTM = findViewById(R.id.ReturnHomeBtn);
@@ -54,18 +50,15 @@ public class OptionsMenu extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        //Get the shared preferences from the AppSettings section in private mode
         fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
         selectedTheme = fetchSP.getString("Theme", "");
 
+        //Setup the spinner with the values of different themes
         SpinnerSetup();
 
-        Log.i("SelectedTheme on Start", selectedTheme);
-
-        if (fetchSP.getBoolean("TTS", true)) {
-            TTS.setChecked(true);
-        } else {
-            TTS.setChecked(false);
-        }
+        //Whatever the stored state of the text to speech is
+        TTS.setChecked(fetchSP.getBoolean("TTS", true));
     }
 
     private void SaveSettings() {
@@ -95,27 +88,17 @@ public class OptionsMenu extends AppCompatActivity {
     }
 
 
+    /*
+        This Function is strictly for setting up and dealing with the Spinner for the theme selection.
+    */
     private void SpinnerSetup() {
 
         //ColorScheme for different visual impairments
-        if(selectedTheme == "Black on White"){
-            NotSelectedTheme = "High Contrast";
-            NotSelectedTheme2 = "White on Black";
-        }else if (selectedTheme == "White on Black") {
-            NotSelectedTheme = "High Contrast";
-            NotSelectedTheme2 = "Black on White";
-        }else if(selectedTheme == "High Contrast"){
-            NotSelectedTheme = "Black on White";
-            NotSelectedTheme2 = "White on Black";
-        }else{
-            NotSelectedTheme = "Black on White";
-            NotSelectedTheme2 = "White on Black";
-        }
-
         ColorScheme = new ArrayList<>();
         ColorScheme.add(selectedTheme);
-        ColorScheme.add(NotSelectedTheme2);
-        ColorScheme.add(NotSelectedTheme);
+        ColorScheme.add("High Contrast");
+        ColorScheme.add("White on Black");
+
         //Spinner Adapter Boilerplate Code
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ColorScheme);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -126,14 +109,11 @@ public class OptionsMenu extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //Selected Theme string, so we can save the activity
                 selectedTheme = spinner.getSelectedItem().toString();
-                int spinnerPosition = adapter.getPosition(selectedTheme);
-                spinner.setSelection(spinnerPosition);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingSelected(AdapterView<?> adapterView) {}
 
-            }
         });
     }
 }
