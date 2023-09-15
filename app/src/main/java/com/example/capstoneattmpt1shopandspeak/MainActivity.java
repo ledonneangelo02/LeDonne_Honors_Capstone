@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+        When we reopen this application we will want to check if we have some stored preferences (AKA User options)
+     */
     @Override
     protected void onStart(){
         super.onStart();
@@ -125,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onTick(long l){}
-
                 }.start();
             }
         });
@@ -136,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
     public void AppWelcome(){
 
         if(txtTspch != null){ txtTspch.shutdown(); }
-
         Intent SpeechToText = new Intent(MainActivity.this, CamActivity.class);
         startActivity(SpeechToText);
     }
