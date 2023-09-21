@@ -39,7 +39,7 @@ import java.util.Set;
 */
 public class MainActivity extends AppCompatActivity {
 
-    Button BarCodeButton,OptButton; //Button used to open the camera
+    Button BarCodeButton,OptButton,SpeakCommand; //Button used to open the camera
     TextToSpeech txtTspch; //TextToSpeech Object so we can allow the app to talk to the user
     String CurrentTheme;
 
@@ -59,8 +59,11 @@ public class MainActivity extends AppCompatActivity {
         //Listen for the button to be clicked and we can move passed the Main page
         OptButton = findViewById(R.id.OptionsButton);
         BarCodeButton = findViewById(R.id.BCButton);
+        SpeakCommand = findViewById(R.id.SpkACmmd);
+        SpeakCommand.setOnClickListener(v -> DatabaseConnect());
         BarCodeButton.setOnClickListener(v -> AppWelcome());
         OptButton.setOnClickListener(v -> OpenOptionsMenu());
+
 
     }
 
@@ -134,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
         txtTspch.shutdown();
     }
 
+    public void DatabaseConnect(){
+        Intent Db2Connet = new Intent(MainActivity.this, ResultDisp.class);
+        startActivity(Db2Connet);
+    }
 
     public void AppWelcome(){
 
