@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <uses-feature
         android:name="android.hardware.audio.output"
@@ -29,6 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CapstoneAttmpt1ShopAndSpeak"
         tools:targetApi="31">
+
         <activity
             android:name=".OptionsMenu"
             android:exported="false"
