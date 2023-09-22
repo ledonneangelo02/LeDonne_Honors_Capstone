@@ -54,7 +54,7 @@
             app:strokeWidth="4dp"
             app:backgroundTint="@color/white"
             android:textColor="@color/black"
-            android:text="@string/SpeakACommand"
+            android:text="Database connect"
             android:textSize="15pt"
             android:textStyle="bold"
             />

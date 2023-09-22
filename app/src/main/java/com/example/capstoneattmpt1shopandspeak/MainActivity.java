@@ -30,7 +30,7 @@ import java.util.Locale;
 */
 public class MainActivity extends AppCompatActivity {
 
-    Button BarCodeButton,OptButton; //Button used to open the camera
+    Button BarCodeButton,OptButton, dbConnect; //Button used to open the camera
     TextToSpeech txtTspch; //TextToSpeech Object so we can allow the app to talk to the user
     String CurrentTheme;
 
@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         //Listen for the button to be clicked and we can move passed the Main page
         OptButton = findViewById(R.id.OptionsButton);
         BarCodeButton = findViewById(R.id.BCButton);
+        dbConnect = findViewById(R.id.SpkACmmd);
+        dbConnect.setOnClickListener(v -> datbaseConnect());
         BarCodeButton.setOnClickListener(v -> AppWelcome());
         OptButton.setOnClickListener(v -> OpenOptionsMenu());
 
@@ -70,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
         if(TextToSpeechOnOFF){
             Hello();
         }
+    }
+
+    private void datbaseConnect(){
+        Intent SpeechToText = new Intent(MainActivity.this, CamActivity.class);
+        startActivity(SpeechToText);
     }
 
     /*
