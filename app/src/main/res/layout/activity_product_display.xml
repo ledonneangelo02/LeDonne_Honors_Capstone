@@ -35,16 +35,10 @@
             android:layout_below="@+id/PrintedServingSize"
             android:layout_centerHorizontal="true"/>
 
-
-        <ImageView
-
-            android:id="@+id/buttonMic"
+        <TextView
+            android:id="@+id/queryResultTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/Mic"
-            android:background="?selectableItemBackground"
-            android:src="@drawable/micpic"
-            android:layout_centerInParent="true" />
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/buttonReturn"
@@ -53,7 +47,6 @@
             android:textSize="24sp"
             android:text="@string/return_to_camera"
             android:textAllCaps="false"
-            android:layout_below="@+id/buttonMic"
             android:layout_centerHorizontal="true"/>
 
         <Space

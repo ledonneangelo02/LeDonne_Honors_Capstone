@@ -11,7 +11,6 @@ xmlns:tools="http://schemas.android.com/tools">
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 <uses-feature
@@ -48,14 +47,19 @@ xmlns:tools="http://schemas.android.com/tools">
     <activity
         android:name=".MainActivity"
         android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.TTS_SERVICE" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
     </activity>
     <activity
         android:name=".CamActivity"
         android:screenOrientation="fullSensor"
         android:stateNotNeeded="true"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-</application>
 
+</application>
 </manifest>
 

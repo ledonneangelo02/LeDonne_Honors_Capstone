@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void datbaseConnect(){
-        Intent SpeechToText = new Intent(MainActivity.this, CamActivity.class);
-        startActivity(SpeechToText);
+        Intent db2 = new Intent(MainActivity.this, ProductDisplay.class);
+        startActivity(db2);
     }
 
     /*
