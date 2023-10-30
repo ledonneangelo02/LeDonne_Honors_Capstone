@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class Db2Connection {
 
     // JDBC URL, username, and password of DB2 server
-    private static final String DB_URL = "jdbc:db2://192.168.1.16:50000/capstone";
-    private static final String USER = "db2inst1";
-    private static final String PASSWORD = "password";
+    private static final String DB_URL = "jdbc:db2://zos.kctr.marist.edu:5045/DALLASD";
+    private static final String USER = "KC03E77";
+    private static final String PASSWORD = "Aceace40";
 
     public static Connection getConnection() {
         try {
