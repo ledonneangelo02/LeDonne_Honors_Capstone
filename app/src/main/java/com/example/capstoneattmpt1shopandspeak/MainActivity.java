@@ -129,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void DatabaseConnect(){
-        Intent Db2Connet = new Intent(MainActivity.this, ResultDisp.class);
-        startActivity(Db2Connet);
+        Intent Db2Conn = new Intent(MainActivity.this, ResultDisp.class);
+        startActivity(Db2Conn);
     }
 
     public void AppWelcome(){
