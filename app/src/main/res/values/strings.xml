@@ -47,5 +47,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_database">database</string>
     <string name="title_activity_database_conn">DatabaseConn</string>
+    <string name="AuthorLine">Created By: Angelo LeDonne</string>
 
 </resources>

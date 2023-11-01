@@ -14,11 +14,17 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.Button;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.Locale;
 
@@ -30,12 +36,30 @@ import java.util.Locale;
 */
 public class MainActivity extends AppCompatActivity {
 
-    Button BarCodeButton,OptButton, dbConnect; //Button used to open the camera
+
+    Button BarCodeButton,OptButton, SpeakCommandButton; //Button used to open the camera
     TextToSpeech txtTspch; //TextToSpeech Object so we can allow the app to talk to the user
     String CurrentTheme;
-
     boolean TextToSpeechOnOFF = true; //Text to speech is on by default
 
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+
+        if(txtTspch != null){ txtTspch.shutdown();}
+
+        if (result.getContents() != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Results");
+            builder.setMessage(result.getContents());
+
+            Intent ResPass = new Intent(this, ProductDisplay.class);
+            ResPass.putExtra("barcode", result.getContents());
+            startActivity(ResPass);
+            Log.i("Barcode Scan Result",result.getContents());
+        } else {
+            Log.e("<!><!> Scanning Error <!><!>", "No Data was found in the scanner");
+        }
+
+    });
     //'When this Activity opens'
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         //Listen for the button to be clicked and we can move passed the Main page
         OptButton = findViewById(R.id.OptionsButton);
         BarCodeButton = findViewById(R.id.BCButton);
-        dbConnect = findViewById(R.id.SpkACmmd);
-        dbConnect.setOnClickListener(v -> datbaseConnect());
-        BarCodeButton.setOnClickListener(v -> AppWelcome());
+        SpeakCommandButton = findViewById(R.id.SpeakCommandButton);
+        SpeakCommandButton.setOnClickListener(v -> OpenSpeechtoText());
+        BarCodeButton.setOnClickListener(v -> openScanner());
         OptButton.setOnClickListener(v -> OpenOptionsMenu());
 
     }
@@ -72,11 +96,6 @@ public class MainActivity extends AppCompatActivity {
         if(TextToSpeechOnOFF){
             Hello();
         }
-    }
-
-    private void datbaseConnect(){
-        Intent db2 = new Intent(MainActivity.this, ProductDisplay.class);
-        startActivity(db2);
     }
 
     /*
@@ -133,16 +152,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void AppWelcome(){
+    private void openScanner() {
 
-        if(txtTspch != null){ txtTspch.shutdown(); }
-        Intent SpeechToText = new Intent(MainActivity.this, CamActivity.class);
-        startActivity(SpeechToText);
+        if(txtTspch != null) { txtTspch.stop(); }
+
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(false);
+        options.setCaptureActivity(CamActivity.class);
+        barLauncher.launch(options);
+
     }
 
     public void OpenOptionsMenu(){
         Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
         startActivity(OpenOptions);
+    }
+
+    public void OpenSpeechtoText(){
+        Intent OpenSpeechText = new Intent(MainActivity.this, SpeechText.class);
+        startActivity(OpenSpeechText);
     }
 
 

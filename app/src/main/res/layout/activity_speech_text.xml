@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ActivityTitle"
             android:layout_marginTop="50dp"
+            android:imeActionLabel="Speech To Text Field"
             android:autofillHints="Click to Speak"
             android:inputType="text"
             android:labelFor="@+id/TEdit"

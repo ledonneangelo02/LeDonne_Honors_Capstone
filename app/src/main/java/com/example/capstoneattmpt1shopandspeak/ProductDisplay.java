@@ -4,59 +4,72 @@ package com.example.capstoneattmpt1shopandspeak;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.util.Log;
 import android.widget.TextView;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.text.BreakIterator;
+import android.widget.Toast;
 
+import java.util.List;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import com.example.capstoneattmpt1shopandspeak.model.Products;
+import com.example.capstoneattmpt1shopandspeak.retrofit.ProductApi;
+import com.example.capstoneattmpt1shopandspeak.retrofit.RetrofitService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import sqlj.runtime.profile.util.CustomizerHarness;
 
 
 public class ProductDisplay extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_display);
 
-        Connection connection = Db2Connection.getConnection();
-
         TextView queryResultTextView = findViewById(R.id.queryResultTextView);
+        TextView ProductName = findViewById(R.id.PrintedName);
+        TextView PrintedServingSize = findViewById(R.id.PrintedServingSize);
+        TextView ProductCalories = findViewById(R.id.PrintedCals);
 
-        if (connection != null) {
-            try {
-                // Execute a SELECT * query
-                String query = "SELECT * FROM Products";
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
+        Intent i = getIntent();
+        String upcResults = i.getStringExtra("barcode");
+        loadProduct(upcResults, ProductName, PrintedServingSize, ProductCalories);
 
-                // Process and display the query results
-                StringBuilder resultText = new StringBuilder();
-                while (resultSet.next()) {
-                    // Replace "column_name" with your actual column names
-                    String columnValue = resultSet.getString("column_name");
-                    resultText.append(columnValue).append("\n");
-                }
+        queryResultTextView.setText(upcResults);
 
-                // Display the results in the TextView
-                queryResultTextView.setText(resultText.toString());
 
-                // Close the database connection
-                connection.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                // Handle any exceptions
-            }
-        } else {
-            // Handle the case when the connection couldn't be established
+    }
+    private void loadProduct(String upcResult, TextView ProductName, TextView PrintedServingSize, TextView ProductCalories){
 
-        }
+        RetrofitService retrofitService = new RetrofitService();
+        ProductApi productApi = retrofitService.getRetrofit().create(ProductApi.class);
 
+        productApi.getProductbyUPC(upcResult)
+                .enqueue(new Callback<List<Products>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<Products>> call, @NonNull Response<List<Products>> response) {
+                        assert response.body() != null;
+                        String x = response.body().get(0).getName();
+
+                        ProductName.setText(response.body().get(0).getName());
+                        PrintedServingSize.setText(response.body().get(0).getServingSize());
+                        ProductCalories.setText(response.body().get(0).getCalories());
+                        Log.i("Response Data name: ", x);
+                        //populateListView(response.body());
+                    }
+                    @Override
+                    public void onFailure(@NonNull Call<List<Products>> call, @NonNull Throwable t) {
+                        Toast.makeText(ProductDisplay.this, "Failed to load product", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void populateListView(List<Products> body) {
 
     }
 

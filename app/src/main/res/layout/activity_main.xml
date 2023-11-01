@@ -28,11 +28,38 @@
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/application_logo"/>
 
+        <TextView
+            android:id="@+id/Author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/AppLogo"
+            android:text="@string/AuthorLine"
+            android:textColor="@color/black"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/OptionsButton"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:layout_below="@+id/Author"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:text="@string/opts"
+            android:textSize="15pt"
+            android:textStyle="bold"/>
+
         <Button
             android:id="@+id/BCButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/AppLogo"
+            android:layout_below="@+id/OptionsButton"
             android:layout_centerHorizontal="true"
             app:strokeColor="@color/black"
             app:strokeWidth="4dp"
@@ -44,33 +71,18 @@
             android:textStyle="bold"/>
 
         <Button
-            android:id="@+id/SpkACmmd"
-            android:layout_height="wrap_content"
+            android:id="@+id/SpeakCommandButton"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/BCButton"
-            android:layout_marginTop="20dp"
-            app:strokeColor="@color/black"
-            app:strokeWidth="4dp"
-            app:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            android:text="Database connect"
-            android:textSize="15pt"
-            android:textStyle="bold"
-            />
-
-        <Button
-            android:id="@+id/OptionsButton"
-            android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/BCButton"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/SpkACmmd"
             app:strokeColor="@color/black"
             app:strokeWidth="4dp"
             app:backgroundTint="@color/white"
             android:textColor="@color/black"
-            android:text="@string/opts"
+            android:text="@string/SpeakACommand"
+            android:textAllCaps="false"
             android:textSize="15pt"
             android:textStyle="bold"/>
+
 </RelativeLayout>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".ProductDisplay">
-
-
 
 
 
@@ -38,22 +38,15 @@
         <TextView
             android:id="@+id/queryResultTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/buttonReturn"
-            android:layout_width="263dp"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:text="@string/return_to_camera"
-            android:textAllCaps="false"
-            android:layout_centerHorizontal="true"/>
+            android:layout_below="@+id/PrintedCals"/>
+
 
         <Space
             android:id="@+id/Padder"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/buttonReturn" />
+            android:layout_below="@+id/queryResultTextView" />
 
         <TextView
             android:id="@+id/BarcodeID"
@@ -64,5 +57,14 @@
             android:layout_below="@+id/Padder"
             />
 
+        <Button
+            android:id="@+id/buttonReturn"
+            android:layout_width="263dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/BarcodeID"
+            android:layout_centerHorizontal="true"
+            android:text="@string/return_to_camera"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
 
 </RelativeLayout>

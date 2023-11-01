@@ -41,25 +41,6 @@ public class SpeechText extends AppCompatActivity {
      * (See OpenScanner() method).
      * </p>
      */
-    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
-
-        if(txtTspch != null){ txtTspch.shutdown();}
-        if(BarcodeTTS != null){ BarcodeTTS.shutdown();}
-
-        if (result.getContents() != null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Results");
-            builder.setMessage(result.getContents());
-
-            Intent ResPass = new Intent(this, ProductDisplay.class);
-            ResPass.putExtra("barcode", result.getContents());
-            startActivity(ResPass);
-
-        } else {
-            Log.e("<!><!> Scanning Error <!><!>", "No Data was found in the scanner");
-        }
-
-    });
 
     /**
      *
@@ -84,7 +65,6 @@ public class SpeechText extends AppCompatActivity {
         GoHome = findViewById(R.id.HomeButton);
 
         //When the button is clicked, call the openScanner() function
-        GoHome.setOnClickListener(v -> openScanner());
     }
 
     @Override
@@ -157,7 +137,7 @@ public class SpeechText extends AppCompatActivity {
                     });
                     BarcodeTTS.shutdown();
 
-                    openScanner();
+
                 } else {
                     DidntCatchThat();
                 }
@@ -184,22 +164,6 @@ public class SpeechText extends AppCompatActivity {
         speechRecognizer.destroy();
     }
 
-    /**
-     *    This function will open the Barcode scanner and prepare the API for capture
-     *    in this function we will also enable all the options needed to scan the barcodes.
-     */
-    private void openScanner() {
-
-        if(txtTspch != null) { txtTspch.stop(); }
-
-        ScanOptions options = new ScanOptions();
-        options.setPrompt("Volume up to flash on");
-        options.setBeepEnabled(true);
-        options.setOrientationLocked(false);
-        options.setCaptureActivity(CamActivity.class);
-        barLauncher.launch(options);
-
-    }
 
 
     /* */
