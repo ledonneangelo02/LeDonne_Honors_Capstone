@@ -53,5 +53,10 @@
     <string name="product_not_found">Product Not Found</string>
     <string name="servings_per_container">Servings Per Container</string>
     <string name="product_information">Product Information:</string>
+    <string name="ServingCountLabel">Servings Per Container:</string>
+    <string name="CaloriesLabel">Calories:</string>
+    <string name="ServingSizeLabel">Serving Size:</string>
+    <string name="ProductNameLabel">Product Name:</string>
+    <string name="LoadingString">Loading… Please Wait</string>
 
 </resources>

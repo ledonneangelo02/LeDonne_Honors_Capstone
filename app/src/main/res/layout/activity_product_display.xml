@@ -15,42 +15,86 @@
             android:layout_marginBottom="30dp"
             android:layout_marginTop="30dp"
             android:text="@string/product_information"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textAlignment="center"
             android:textSize="30sp"
             />
+
         <TextView
-            android:id="@+id/ProductName"
-            android:layout_width="match_parent"
+            android:id="@+id/ProductNameLabel"
+            android:layout_width="210dp"
             android:layout_height="80dp"
             android:layout_below="@+id/ProductDisplayTitle"
-            android:textSize="20sp"
+            android:textColor="@color/black"
             android:textStyle="bold"
-            android:layout_centerHorizontal="true"
-            />
+            android:textSize="20sp"
+            android:text="@string/ProductNameLabel"/>
+        <TextView
+            android:id="@+id/ProductName"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/ProductDisplayTitle"
+            android:layout_toEndOf="@+id/ProductNameLabel"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/ProductServingSizeLabel"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/ProductName"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="@string/ServingSizeLabel"/>
 
         <TextView
             android:id="@+id/PrintedServingSize"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="80dp"
-            android:textSize="20sp"
             android:layout_below="@+id/ProductName"
-            android:layout_centerHorizontal="true"/>
+            android:layout_toEndOf="@+id/ProductServingSizeLabel"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
+        <TextView
+            android:id="@+id/ProductCaloriesLabel"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/PrintedServingSize"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="@string/CaloriesLabel"/>
 
         <TextView
             android:id="@+id/ProductCalories"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="80dp"
-            android:textSize="20sp"
             android:layout_below="@+id/PrintedServingSize"
-            android:layout_centerHorizontal="true"/>
+            android:layout_toEndOf="@+id/ProductCaloriesLabel"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/ServingCountLabel"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/ProductCalories"
+            android:text="@string/ServingCountLabel"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/ProductServingCount"
-            android:layout_width="match_parent"
+            android:layout_width="210dp"
             android:layout_height="80dp"
             android:layout_below="@+id/ProductCalories"
-            android:textAlignment="center"/>
+            android:layout_toEndOf="@id/ServingCountLabel"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
 
         <Space

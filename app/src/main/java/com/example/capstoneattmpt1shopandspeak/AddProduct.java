@@ -38,7 +38,7 @@ public class AddProduct extends AppCompatActivity {
     }
 
     private void InitializeProduct(){
-        EditText Productname = findViewById(R.id.ItemName);
+        EditText ProductName = findViewById(R.id.ItemName);
         EditText ProductServing = findViewById(R.id.SerSize);
         EditText ProductCalories = findViewById(R.id.CalServing);
         EditText ProductServingCount = findViewById(R.id.ServingCount);
@@ -49,7 +49,7 @@ public class AddProduct extends AppCompatActivity {
 
         SaveProduct.setOnClickListener(v -> {
 
-            String Name = String.valueOf(Productname.getText());
+            String Name = String.valueOf(ProductName.getText());
             String Serving = String.valueOf(ProductServing.getText());
             String Calories = String.valueOf(ProductCalories.getText());
             String ServingCount = String.valueOf(ProductServingCount.getText());

@@ -26,6 +26,11 @@ import retrofit2.Response;
 public class ProductDisplay extends AppCompatActivity {
 
     String upcResults = "";
+    String ProductName = "";
+    String ProductServingSize = "";
+    String ProductCalories = "";
+    String ProductServingCount = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,38 +47,24 @@ public class ProductDisplay extends AppCompatActivity {
         ReturnToCameraButton.setOnClickListener(v -> ReturnToCamera());
 
         Intent i = getIntent();
-        upcResults = i.getStringExtra("barcode");
-        loadProduct(upcResults, ProdName, PrintedServingSize, ProdCalories, ProdServingCount);
+        upcResults = i.getStringExtra("upcId");
+        ProductName = i.getStringExtra("ProdName");
+        ProductServingSize = i.getStringExtra("ProdServingSize");
+        ProductCalories = i.getStringExtra("ProdCalories");
+        ProductServingCount = i.getStringExtra("ProdServingCount");
+        loadProduct(ProdName, PrintedServingSize, ProdCalories, ProdServingCount);
     }
 
     /*
      * This function will load the results from the query into the Display fields in the Activity
      */
-    private void loadProduct(String upcResult, TextView ProductName, TextView PrintedServingSize, TextView ProductCalories, TextView ProductServingCount){
+    private void loadProduct(TextView ProdName, TextView ProdServingSize, TextView ProdCalories, TextView ProdServingCount){
 
-        RetrofitService retrofitService = new RetrofitService();
-        ProductApi productApi = retrofitService.getRetrofit().create(ProductApi.class);
+        ProdName.setText(ProductName);
+        ProdServingSize.setText(ProductServingSize);
+        ProdCalories.setText(ProductCalories);
+        ProdServingCount.setText(ProductServingCount);
 
-        productApi.getProductbyUPC(upcResult)
-                .enqueue(new Callback<List<Products>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<Products>> call, @NonNull Response<List<Products>> response) {
-                        assert response.body() != null;
-                        Log.i("Response Body:", response.body().toString());
-                        if(response.body().isEmpty()) {
-                            InsertNewProduct();
-                        }else {
-                            ProductName.setText(response.body().get(0).getName());
-                            PrintedServingSize.setText(response.body().get(0).getServingSize());
-                            ProductCalories.setText(response.body().get(0).getCalories());
-                            ProductServingCount.setText(response.body().get(0).getServingCount());
-                        }
-                    }
-                    @Override
-                    public void onFailure(@NonNull Call<List<Products>> call, @NonNull Throwable t) {
-                        Toast.makeText(ProductDisplay.this, "Failed to load product", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     /*
@@ -91,14 +82,6 @@ public class ProductDisplay extends AppCompatActivity {
 
     }
 
-    /*
-     * If the UPC code that was scanned is not found, then open the Add Product Activity
-     */
-    public void InsertNewProduct(){
-        Intent InsertNewProd = new Intent(ProductDisplay.this, AddProduct.class);
-        InsertNewProd.putExtra("Upc", upcResults);
-        startActivity(InsertNewProd);
-    }
 
 }
 

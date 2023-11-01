@@ -9,7 +9,7 @@ public class Products {
 
     private String servingSize;
 
-    private String servingCnt;
+    private String servingCount;
 
     // Getters and Setters
     public String getUpcId() {
@@ -29,11 +29,11 @@ public class Products {
     }
 
     public String getServingCount() {
-        return servingCnt;
+        return servingCount;
     }
 
-    public void setServingCount(String servingCnt) {
-        this.servingCnt = servingCnt;
+    public void setServingCount(String servingCount) {
+        this.servingCount = servingCount;
     }
 
     public String getCalories() {

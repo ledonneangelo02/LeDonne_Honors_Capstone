@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             builder.setTitle("Results");
             builder.setMessage(result.getContents());
 
-            Intent ResPass = new Intent(this, ProductDisplay.class);
+            Intent ResPass = new Intent(this, LoadingScreen.class);
             ResPass.putExtra("barcode", result.getContents());
             startActivity(ResPass);
             Log.i("Barcode Scan Result",result.getContents());
