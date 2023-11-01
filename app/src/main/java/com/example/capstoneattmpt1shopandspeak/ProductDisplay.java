@@ -4,6 +4,7 @@ package com.example.capstoneattmpt1shopandspeak;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +59,7 @@ public class ProductDisplay extends AppCompatActivity {
                     @Override
                     public void onResponse(@NonNull Call<List<Products>> call, @NonNull Response<List<Products>> response) {
                         assert response.body() != null;
+                        Log.i("Response Body:", response.body().toString());
                         if(response.body().isEmpty()) {
                             InsertNewProduct();
                         }else {
@@ -95,6 +97,7 @@ public class ProductDisplay extends AppCompatActivity {
     public void InsertNewProduct(){
         Intent InsertNewProd = new Intent(ProductDisplay.this, AddProduct.class);
         InsertNewProd.putExtra("Upc", upcResults);
+        startActivity(InsertNewProd);
     }
 
 }

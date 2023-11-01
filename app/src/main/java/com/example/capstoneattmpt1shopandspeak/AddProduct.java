@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,12 +64,12 @@ public class AddProduct extends AppCompatActivity {
             productApi.createProduct(product)
                     .enqueue(new Callback<Products>() {
                         @Override
-                        public void onResponse(@NonNull Call<Products> call, Response<Products> response) {
+                        public void onResponse(@NonNull Call<Products> call, @NonNull Response<Products> response) {
 
                         }
                         @Override
-                        public void onFailure(Call<Products> call, Throwable t) {
-
+                        public void onFailure(@NonNull Call<Products> call, @NonNull Throwable t) {
+                            Toast.makeText(AddProduct.this, "Failed to load product", Toast.LENGTH_SHORT).show();
                         }
                     });
             });
