@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     String CurrentTheme;
     boolean TextToSpeechOnOFF = true; //Text to speech is on by default
 
+    //Barcode Init
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
 
         if(txtTspch != null){ txtTspch.shutdown();}
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     });
+
     //'When this Activity opens'
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
         OptButton = findViewById(R.id.OptionsButton);
         BarCodeButton = findViewById(R.id.BCButton);
         SpeakCommandButton = findViewById(R.id.SpeakCommandButton);
-        SpeakCommandButton.setOnClickListener(v -> OpenSpeechtoText());
+        SpeakCommandButton.setOnClickListener(v -> OpenSpeechToText());
         BarCodeButton.setOnClickListener(v -> openScanner());
         OptButton.setOnClickListener(v -> OpenOptionsMenu());
 
     }
 
     /*
-        When we reopen this application we will want to check if we have some stored preferences (AKA User options)
+     *  When we reopen this application we will want to check if we have some stored preferences (AKA User options)
      */
     @Override
     protected void onStart(){
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             Hello();
         }
     }
+
 
     /*
      * This method is Responsible for Checking the Device Permissions before attempting to use them
@@ -115,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 result2 == PackageManager.PERMISSION_GRANTED &&
                 result3 == PackageManager.PERMISSION_GRANTED;
     }
+
 
     /*
      * This method is responsible for requesting the permissions we don't currently have.
@@ -152,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /*
+     * This function opens the Barcode Scanning Activity
+     */
     private void openScanner() {
 
         if(txtTspch != null) { txtTspch.stop(); }
@@ -165,12 +172,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+     * This function Opens the Options Menu
+     */
     public void OpenOptionsMenu(){
         Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
         startActivity(OpenOptions);
     }
 
-    public void OpenSpeechtoText(){
+    /*
+     * This Function Opens the SpeechText Activity
+     */
+    public void OpenSpeechToText(){
         Intent OpenSpeechText = new Intent(MainActivity.this, SpeechText.class);
         startActivity(OpenSpeechText);
     }

@@ -8,11 +8,21 @@
     tools:context=".ProductDisplay">
 
 
-
         <TextView
-            android:id="@+id/PrintedName"
-            android:layout_width="300dp"
+            android:id="@+id/ProductDisplayTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/product_information"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            />
+        <TextView
+            android:id="@+id/ProductName"
+            android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:layout_below="@+id/ProductDisplayTitle"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
@@ -20,51 +30,54 @@
 
         <TextView
             android:id="@+id/PrintedServingSize"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="80dp"
             android:textSize="20sp"
-            android:layout_below="@+id/PrintedName"
+            android:layout_below="@+id/ProductName"
             android:layout_centerHorizontal="true"/>
 
 
         <TextView
-            android:id="@+id/PrintedCals"
-            android:layout_width="300dp"
+            android:id="@+id/ProductCalories"
+            android:layout_width="match_parent"
             android:layout_height="80dp"
             android:textSize="20sp"
             android:layout_below="@+id/PrintedServingSize"
             android:layout_centerHorizontal="true"/>
 
         <TextView
-            android:id="@+id/queryResultTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/PrintedCals"/>
+            android:id="@+id/ProductServingCount"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/ProductCalories"
+            android:textAlignment="center"/>
 
 
         <Space
             android:id="@+id/Padder"
-            android:layout_width="50dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/queryResultTextView" />
+            android:layout_below="@+id/ProductServingCount" />
 
-        <TextView
-            android:id="@+id/BarcodeID"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/Padder"
-            />
 
         <Button
-            android:id="@+id/buttonReturn"
+            android:id="@+id/CamReturnButton"
             android:layout_width="263dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/BarcodeID"
+            android:layout_below="@+id/Padder"
             android:layout_centerHorizontal="true"
             android:text="@string/return_to_camera"
             android:textAllCaps="false"
-            android:textSize="24sp" />
+            android:textSize="29sp" />
+        <Button
+            android:id="@+id/ReturnHomeButton"
+            android:layout_width="263dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/CamReturnButton"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:text="@string/MainMenuStr"
+            android:textAllCaps="false"
+            android:textSize="29sp" />
 
 </RelativeLayout>

@@ -27,7 +27,7 @@
     <string name="application_logo">Application Logo</string>
     <string name="save_and_return">Save and Return</string>
     <string name="Wait_time">Please Wait. . .</string>
-    <string name="click_to_speak">(Click To Speak)</string>
+    <string name="click_to_speak">Click The Microphone and Speak:</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
@@ -48,5 +48,10 @@
     <string name="title_activity_database">database</string>
     <string name="title_activity_database_conn">DatabaseConn</string>
     <string name="AuthorLine">Created By: Angelo LeDonne</string>
+    <string name="InsertDetails">Please Insert Details:</string>
+    <string name="insert_new_product">Insert New Product</string>
+    <string name="product_not_found">Product Not Found</string>
+    <string name="servings_per_container">Servings Per Container</string>
+    <string name="product_information">Product Information:</string>
 
 </resources>

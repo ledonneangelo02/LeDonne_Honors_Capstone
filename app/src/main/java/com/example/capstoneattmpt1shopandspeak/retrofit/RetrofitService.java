@@ -9,10 +9,10 @@ public class RetrofitService {
     private Retrofit retrofit;
 
     public RetrofitService() {
-        initalizeRetrofit();
+        initializeRetrofit();
     }
 
-    private void initalizeRetrofit(){
+    private void initializeRetrofit(){
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://capstoneapi.jollyglacier-2cb4ad63.eastus.azurecontainerapps.io")
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
