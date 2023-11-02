@@ -8,7 +8,7 @@
 The purpose of this project is to establish a connection & communication stream between a mobile device and the mainframe. To graduate with Full Honors from Northern Illinois University I have designed and developed the app concept, interface, and database scheme in its entirety. 
 
 # **API Information**
-Zxing Android API for Barcode scanning and data retrieval (https://github.com/journeyapps/zxing-android-embedded) </br>
+ZXing API for Barcode scanning and data retrieval (https://github.com/journeyapps/zxing-android-embedded) </br>
 Springboot RESTful API for Db2 connection to the Marist Mainframe (https://spring.io/projects/spring-boot)</br>
 Retrofit for Springboot RESTful API connection (https://square.github.io/retrofit/)
 
