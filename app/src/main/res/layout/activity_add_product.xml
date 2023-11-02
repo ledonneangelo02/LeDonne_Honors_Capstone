@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddProduct">
+
+
+    <TextView
+        android:id="@+id/InsertHeader1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="@string/product_not_found"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/InsertHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/InsertHeader1"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:text="@string/InsertDetails"
+        android:textSize="30sp" />
+
+    <Space
+        android:id="@+id/Spacer1"
+        android:layout_below="@+id/InsertHeader"
+        android:layout_width="263dp"
+        android:layout_height="50dp" />
+
+
+    <EditText
+        android:id="@+id/ItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Spacer1"
+        android:textSize="20sp"
+        android:ems="11"
+        android:hint="@string/item_name"
+        android:inputType="text"
+        android:autofillHints="Put data here" />
+
+    <EditText
+        android:id="@+id/SerSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ItemName"
+        android:textSize="20sp"
+        android:ems="11"
+        android:hint="@string/serving_size"
+        android:inputType="text"
+        android:autofillHints="Put Serving Size here"
+        tools:ignore="TextFields" />
+
+    <EditText
+        android:id="@+id/CalServing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SerSize"
+        android:textSize="20sp"
+        android:ems="11"
+        android:hint="@string/calories_per_serving"
+        android:inputType="number"
+        android:autofillHints="Put Calories here" />
+
+    <EditText
+        android:id="@+id/ServingCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CalServing"
+        android:textSize="20sp"
+        android:ems="11"
+        android:hint="@string/servings_per_container"
+        android:inputType="text"
+        android:autofillHints="Put Serving Count here"
+        tools:ignore="TextFields" />
+
+
+    <Space
+        android:id="@+id/Spacer3"
+        android:layout_below="@id/ServingCount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <Button
+        android:id="@+id/GenerateProductButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Spacer3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        app:strokeColor="@color/black"
+        app:strokeWidth="4dp"
+        app:backgroundTint="@color/white"
+        android:text="@string/insert_new_product"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textSize="15pt"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/CamReturnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/GenerateProductButton"
+        android:layout_centerHorizontal="true"
+        app:strokeColor="@color/black"
+        app:strokeWidth="4dp"
+        app:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:text="@string/return_to_camera"
+        android:textAllCaps="false"
+        android:textSize="15pt"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/ReturnHomeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CamReturnButton"
+        android:layout_centerHorizontal="true"
+        app:strokeColor="@color/black"
+        app:strokeWidth="4dp"
+        app:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:text="@string/MainMenuStr"
+        android:textAllCaps="false"
+        android:textSize="15pt"
+        android:textStyle="bold"/>
+
+</RelativeLayout>

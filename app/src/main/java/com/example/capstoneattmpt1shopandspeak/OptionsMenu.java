@@ -1,88 +1,109 @@
 package com.example.capstoneattmpt1shopandspeak;
 
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 
 public class OptionsMenu extends AppCompatActivity {
 
-    String selectedTheme = "Black on White";
-    String TTSOn;
-    boolean TextToSpeechOn;
-    String fileST = getFilesDir() + "/" + "settings.txt";
+    boolean TextToSpeechOn = true;
+    SharedPreferences fetchSP, sp;
+    Switch TTS;
+    TextToSpeech txtTspch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options_menu);
 
-        //ColorScheme for different visual impairments
-        List<String> ColorScheme = new ArrayList<>();
-        ColorScheme.add("Black on White");
-        ColorScheme.add("High Contrast");
-        ColorScheme.add("White on Black");
-
-        //Spinner Adapter Boilerplate Code
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ColorScheme);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner spinner = (Spinner) findViewById(R.id.ColorSchemeSpinner);
-        spinner.setAdapter(adapter);
-
         //Save and go back to home page
-        Button RTM = findViewById(R.id.ReturnHomeBtn);
-        RTM.setOnClickListener(v -> ReturnHome());
+        Button ReturnHomeButton = findViewById(R.id.ReturnHomeBtn);
+        ReturnHomeButton.setOnClickListener(v -> ReturnHome());
 
         //Save and speak a command to the application
         Button SpeakCommand = findViewById(R.id.SpeakACommand);
         SpeakCommand.setOnClickListener(v -> OpenSpeakACommand());
 
         //Switch for TextToSpeech Toggling
-        Switch TTS = findViewById(R.id.TextToSpeechToggle);
-        TextToSpeechOn = TTS.isChecked();
+        TTS = findViewById(R.id.TextToSpeechToggle);
 
-        //Selected Theme string, so we can save the activity
-        selectedTheme = spinner.getSelectedItem().toString();
+        //Get the shared preferences from the AppSettings section in private mode
+        fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
+
+        //Whatever the stored state of the text to speech is
+        TTS.setChecked(fetchSP.getBoolean("TTS", true));
+
+        if(TTS.isChecked()){
+            TextToSpeechInstuctions();
+        }
     }
 
-    private void ReturnHome(){
-        SaveOptions();
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+    }
+
+    private void SaveSettings() {
+        TextToSpeechOn = TTS.isChecked();
+
+        sp = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
+        SharedPreferences.Editor spEdit = sp.edit();
+        spEdit.putBoolean("TTS", TextToSpeechOn);
+        spEdit.apply();
+    }
+
+    private void ReturnHome() {
+
+        if(txtTspch != null) { txtTspch.shutdown(); }
+        //Save the users changed settings
+        SaveSettings();
+
         Intent ReturnHome = new Intent(OptionsMenu.this, MainActivity.class);
         startActivity(ReturnHome);
     }
 
-    private void OpenSpeakACommand(){
-        SaveOptions();
+    private void OpenSpeakACommand() {
+
+        if(txtTspch != null) { txtTspch.shutdown(); }
+
+        //Save the users changed settings
+        SaveSettings();
+
         Intent SpeakCommands = new Intent(OptionsMenu.this, SpeechText.class);
         startActivity(SpeakCommands);
     }
 
-    private void SaveOptions(){
-        if(TextToSpeechOn){
-            TTSOn = "Yes";
-        }else{
-            TTSOn = "No";
-        }
+    private void TextToSpeechInstuctions(){
 
-        try {
-            OutputStreamWriter outStream = new OutputStreamWriter(this.openFileOutput(fileST, Context.MODE_PRIVATE));
-            outStream.write("Theme: " + selectedTheme);
-            outStream.write("TextToSpeech: " + TTSOn);
-        }catch (IOException e){
-            Log.e("Exception:", "File write Failed " + e);
-        }
+        //Turning on the the TextToSpeech Object
+        txtTspch = new TextToSpeech(getApplicationContext(), i -> {
+            // if No error is found then TextToSpeech can perform the translation
+            if(i != TextToSpeech.ERROR){
+                // To Choose language of speech
+                txtTspch.setLanguage(Locale.getDefault());
+                //Ask the user to pick an option
+                new CountDownTimer(2000, 1000){
+                    public void onFinish(){
+                        txtTspch.speak("Please make your changes and click save to return to the home screen, or click the 'speak a command' button", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                    @Override
+                    public void onTick(long l){}
+                }.start();
+            }
+        });
+        txtTspch.shutdown();
     }
+
 }

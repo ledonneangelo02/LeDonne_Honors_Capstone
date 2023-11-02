@@ -11,7 +11,7 @@
     <string name="serving_size">Serving Size</string>
     <string name="calories_per_serving">Calories Per Serving</string>
     <string name="generate_record">Generate Record</string>
-    <string name="return_to_camera">Return to Camera</string>
+    <string name="return_to_camera">Return To Camera</string>
     <string name="Mic">Microphone</string>
     <string name="TGH">Text goes Here</string>
     <string name="BarCodeText">BARCODE SCANNER</string>
@@ -20,11 +20,43 @@
     <string name="TxtReader">TEXT\nREADER</string>
     <string name="SpeakACommand">SPEAK A COMMAND</string>
     <string name="title_activity_options_menu">OptionsMenu</string>
-    <string name="text_to_speech">Text To Speech\n(Off/On):</string>
-    <string name="options_menu"><u>Options Menu</u>:</string>
+    <string name="text_to_speech">Text To Speech (Off/On):</string>
+    <string name="options_menu">Options Menu:</string>
     <string name="color_scheme">Color Scheme:</string>
     <string name="MainMenuStr">Return To Main Menu</string>
     <string name="application_logo">Application Logo</string>
     <string name="save_and_return">Save and Return</string>
+    <string name="Wait_time">Please Wait. . .</string>
+    <string name="click_to_speak">Click The Microphone and Speak:</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_database">database</string>
+    <string name="title_activity_database_conn">DatabaseConn</string>
+    <string name="AuthorLine">Created By: Angelo LeDonne</string>
+    <string name="InsertDetails">Please Insert Details:</string>
+    <string name="insert_new_product">Insert New Product</string>
+    <string name="product_not_found">Product Not Found</string>
+    <string name="servings_per_container">Servings Per Container</string>
+    <string name="product_information">Product Information:</string>
+    <string name="ServingCountLabel">Servings Per Container:</string>
+    <string name="CaloriesLabel">Calories:</string>
+    <string name="ServingSizeLabel">Serving Size:</string>
+    <string name="ProductNameLabel">Product Name:</string>
+    <string name="LoadingString">Loading… Please Wait</string>
 
 </resources>

@@ -2,34 +2,31 @@ package com.example.capstoneattmpt1shopandspeak;
 
 
 //All imports needed for API and app functions
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.RECORD_AUDIO;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.renderscript.ScriptGroup;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
+
 import java.util.Locale;
-import java.util.Objects;
 
 /*
 *    This Class is the 'Main' class of the application, it will
@@ -39,12 +36,31 @@ import java.util.Objects;
 */
 public class MainActivity extends AppCompatActivity {
 
-    Button BarCodeButton; //Button used to open the camera
-    Button OptButton;
+
+    Button BarCodeButton,OptButton, SpeakCommandButton; //Button used to open the camera
     TextToSpeech txtTspch; //TextToSpeech Object so we can allow the app to talk to the user
-    String Rez;
-    String [] recordCols;
-    boolean found_flag = false;
+    String CurrentTheme;
+    boolean TextToSpeechOnOFF = true; //Text to speech is on by default
+
+    //Barcode Init
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+
+        if(txtTspch != null){ txtTspch.shutdown();}
+
+        if (result.getContents() != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Results");
+            builder.setMessage(result.getContents());
+
+            Intent ResPass = new Intent(this, LoadingScreen.class);
+            ResPass.putExtra("barcode", result.getContents());
+            startActivity(ResPass);
+            Log.i("Barcode Scan Result",result.getContents());
+        } else {
+            Log.e("<!><!> Scanning Error <!><!>", "No Data was found in the scanner");
+        }
+
+    });
 
     //'When this Activity opens'
     @Override
@@ -57,17 +73,35 @@ public class MainActivity extends AppCompatActivity {
             requestPermission();
         }
 
-        //Initiate the TextToSpeech Object, and begin speaking to the user to instruct them what to do
-        CheckSettings();
-        Hello();
-
         //Listen for the button to be clicked and we can move passed the Main page
         OptButton = findViewById(R.id.OptionsButton);
         BarCodeButton = findViewById(R.id.BCButton);
-        BarCodeButton.setOnClickListener(v -> AppWelcome());
+        SpeakCommandButton = findViewById(R.id.SpeakCommandButton);
+        SpeakCommandButton.setOnClickListener(v -> OpenSpeechToText());
+        BarCodeButton.setOnClickListener(v -> openScanner());
         OptButton.setOnClickListener(v -> OpenOptionsMenu());
 
+        SharedPreferences fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
+        TextToSpeechOnOFF = fetchSP.getBoolean("TTS", true);
+        CurrentTheme = fetchSP.getString("Theme", "");
+
+        //Begin to Speak to the user only if the TTS setting is active (True)
+        if(TextToSpeechOnOFF){
+            Hello();
+        }
+
     }
+
+    /*
+     *  When we reopen this application we will want to check if we have some stored preferences (AKA User options)
+     */
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+    }
+
+
     /*
      * This method is Responsible for Checking the Device Permissions before attempting to use them
      *
@@ -80,12 +114,12 @@ public class MainActivity extends AppCompatActivity {
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), INTERNET);
         int result3 = ContextCompat.checkSelfPermission(getApplicationContext(), RECORD_AUDIO);
 
-        return
-                result == PackageManager.PERMISSION_GRANTED &&
-                        result1 == PackageManager.PERMISSION_GRANTED &&
-                        result2 == PackageManager.PERMISSION_GRANTED &&
-                        result3 == PackageManager.PERMISSION_GRANTED;
+        return  result  == PackageManager.PERMISSION_GRANTED &&
+                result1 == PackageManager.PERMISSION_GRANTED &&
+                result2 == PackageManager.PERMISSION_GRANTED &&
+                result3 == PackageManager.PERMISSION_GRANTED;
     }
+
 
     /*
      * This method is responsible for requesting the permissions we don't currently have.
@@ -112,11 +146,10 @@ public class MainActivity extends AppCompatActivity {
                 //Ask the user to pick an option
                 new CountDownTimer(3000, 1000){
                     public void onFinish(){
-                        txtTspch.speak("Welcome to Shop and Speak!", TextToSpeech.QUEUE_FLUSH, null, null);
+                        txtTspch.speak("Welcome to Shop and Speak!", TextToSpeech.QUEUE_ADD, null, null);
                     }
                     @Override
                     public void onTick(long l){}
-
                 }.start();
             }
         });
@@ -124,53 +157,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void AppWelcome(){
+    /*
+     * This function opens the Barcode Scanning Activity
+     */
+    private void openScanner() {
 
-        if(txtTspch != null){ txtTspch.shutdown(); }
+        if(txtTspch != null) { txtTspch.stop(); txtTspch.shutdown(); }
 
-        Intent SpeechToText = new Intent(MainActivity.this, SpeechText.class);
-        startActivity(SpeechToText);
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(false);
+        options.setCaptureActivity(CamActivity.class);
+        barLauncher.launch(options);
+
     }
 
-
+    /*
+     * This function Opens the Options Menu
+     */
     public void OpenOptionsMenu(){
+        if(txtTspch != null) { txtTspch.stop(); txtTspch.shutdown(); }
+
         Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
         startActivity(OpenOptions);
     }
 
-    private void CheckSettings() {
+    /*
+     * This Function Opens the SpeechText Activity
+     */
+    public void OpenSpeechToText(){
 
-        String fileST = getFilesDir() + "/" + "settings.txt";
+        if(txtTspch != null) { txtTspch.stop(); txtTspch.shutdown(); }
 
-        File file = new File(fileST);
-
-        if (file.exists()) {
-            FileInputStream fis;
-            String textContent;
-
-            try {
-                fis = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new FileReader(fileST));
-
-                textContent = br.readLine();
-
-                while (textContent != null) {
-
-                    if (Objects.equals("Theme:", textContent.substring(0, 5))) {
-
-                        Toast.makeText(this, textContent.substring(6, 15), Toast.LENGTH_LONG).show();
-
-                        fis.close();
-                    }
-                    textContent = br.readLine();
-                }
-                fis.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }
+        Intent OpenSpeechText = new Intent(MainActivity.this, SpeechText.class);
+        startActivity(OpenSpeechText);
     }
+
 
 }
 

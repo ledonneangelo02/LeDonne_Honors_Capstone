@@ -1,75 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".ProductDisplay">
 
 
-
-
+        <TextView
+            android:id="@+id/ProductDisplayTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/product_information"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            />
 
         <TextView
-            android:id="@+id/PrintedName"
-            android:layout_width="300dp"
+            android:id="@+id/ProductNameLabel"
+            android:layout_width="210dp"
             android:layout_height="80dp"
-            android:textSize="20sp"
+            android:layout_below="@+id/ProductDisplayTitle"
+            android:textColor="@color/black"
             android:textStyle="bold"
-            android:layout_centerHorizontal="true"
-            />
+            android:textSize="20sp"
+            android:text="@string/ProductNameLabel"/>
+        <TextView
+            android:id="@+id/ProductName"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/ProductDisplayTitle"
+            android:layout_toEndOf="@+id/ProductNameLabel"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/ProductServingSizeLabel"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/ProductName"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="@string/ServingSizeLabel"/>
 
         <TextView
             android:id="@+id/PrintedServingSize"
-            android:layout_width="300dp"
+            android:layout_width="210dp"
             android:layout_height="80dp"
+            android:layout_below="@+id/ProductName"
+            android:layout_toEndOf="@+id/ProductServingSizeLabel"
             android:textSize="20sp"
-            android:layout_below="@+id/PrintedName"
-            android:layout_centerHorizontal="true"/>
-
+            android:textColor="@color/black"/>
 
         <TextView
-            android:id="@+id/PrintedCals"
-            android:layout_width="300dp"
+            android:id="@+id/ProductCaloriesLabel"
+            android:layout_width="210dp"
             android:layout_height="80dp"
-            android:textSize="20sp"
             android:layout_below="@+id/PrintedServingSize"
-            android:layout_centerHorizontal="true"/>
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="@string/CaloriesLabel"/>
 
+        <TextView
+            android:id="@+id/ProductCalories"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/PrintedServingSize"
+            android:layout_toEndOf="@+id/ProductCaloriesLabel"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
-        <ImageView
+        <TextView
+            android:id="@+id/ServingCountLabel"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/ProductCalories"
+            android:text="@string/ServingCountLabel"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
 
-            android:id="@+id/buttonMic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/Mic"
-            android:background="?selectableItemBackground"
-            android:src="@drawable/micpic"
-            android:layout_centerInParent="true" />
+        <TextView
+            android:id="@+id/ProductServingCount"
+            android:layout_width="210dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/ProductCalories"
+            android:layout_toEndOf="@id/ServingCountLabel"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
-        <Button
-            android:id="@+id/buttonReturn"
-            android:layout_width="263dp"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:text="@string/return_to_camera"
-            android:textAllCaps="false"
-            android:layout_below="@+id/buttonMic"
-            android:layout_centerHorizontal="true"/>
 
         <Space
             android:id="@+id/Padder"
-            android:layout_width="50dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/buttonReturn" />
+            android:layout_below="@+id/ProductServingCount" />
 
-        <TextView
-            android:id="@+id/BarcodeID"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:textSize="15sp"
-            android:layout_centerHorizontal="true"
+
+        <Button
+            android:id="@+id/CamReturnButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/Padder"
-            />
+            android:layout_centerHorizontal="true"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:text="@string/return_to_camera"
+            android:textAllCaps="false"
+            android:textSize="15pt"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/ReturnHomeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/CamReturnButton"
+            android:layout_centerHorizontal="true"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:text="@string/MainMenuStr"
+            android:textAllCaps="false"
+            android:textSize="15pt"
+            android:textStyle="bold"/>
 
 
 </RelativeLayout>
