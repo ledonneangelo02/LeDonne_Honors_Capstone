@@ -75,6 +75,7 @@ public class SpeechText extends AppCompatActivity {
 
         //Setting btnSend to the button in the xml
         GoHome = findViewById(R.id.HomeButton);
+        GoHome.setOnClickListener(v -> OpenMainMenu());
 
         //When the button is clicked, call the openScanner() function
     }

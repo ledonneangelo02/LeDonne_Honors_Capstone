@@ -177,6 +177,8 @@ public class MainActivity extends AppCompatActivity {
      * This function Opens the Options Menu
      */
     public void OpenOptionsMenu(){
+        if(txtTspch != null) { txtTspch.stop(); txtTspch.shutdown(); }
+
         Intent OpenOptions = new Intent(MainActivity.this, OptionsMenu.class);
         startActivity(OpenOptions);
     }
@@ -185,6 +187,9 @@ public class MainActivity extends AppCompatActivity {
      * This Function Opens the SpeechText Activity
      */
     public void OpenSpeechToText(){
+
+        if(txtTspch != null) { txtTspch.stop(); txtTspch.shutdown(); }
+
         Intent OpenSpeechText = new Intent(MainActivity.this, SpeechText.class);
         startActivity(OpenSpeechText);
     }

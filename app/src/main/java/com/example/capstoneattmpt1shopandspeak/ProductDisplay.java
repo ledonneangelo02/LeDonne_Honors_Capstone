@@ -63,15 +63,6 @@ public class ProductDisplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_display);
 
-
-    }
-    /*
-     *  When we reopen this application we will want to check if we have some stored preferences (AKA User options)
-     */
-    @Override
-    protected void onStart(){
-        super.onStart();
-
         SharedPreferences fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
         TextToSpeechOnOFF = fetchSP.getBoolean("TTS", true);
 
@@ -91,6 +82,14 @@ public class ProductDisplay extends AppCompatActivity {
         ProductCalories = i.getStringExtra("ProdCalories");
         ProductServingCount = i.getStringExtra("ProdServingCount");
         loadProduct(ProdName, PrintedServingSize, ProdCalories, ProdServingCount);
+
+    }
+
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
     }
     /*
      * This function will load the results from the query into the Display fields in the Activity
