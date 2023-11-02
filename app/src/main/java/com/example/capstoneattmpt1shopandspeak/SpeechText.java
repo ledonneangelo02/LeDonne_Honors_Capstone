@@ -3,6 +3,7 @@ package com.example.capstoneattmpt1shopandspeak;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -21,18 +22,23 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class SpeechText extends AppCompatActivity {
 
+    SharedPreferences sp;
     EditText Textedit;  //A EditText object that stores the string spoken interpreted by Android SpeechRecognizer
     Button GoHome;     //Button
     ImageView mic;      //Clickable Image object
-    int CameraConfScore = 0;    //How confident we are in what the user is asking for
     String[] CameraArray = new String[]{"USE", "OPEN", "CAMERA", "SCAN", "SCANNER", "BARCODE"}; //Camera Keywords
     String[] OptionsArray = new String[]{"OPEN", "OPTIONS", "SETTINGS", "MENU"}; //Options Menu Keywords
+    String[] OptionsChange = new String[]{"CHANGE", "TEXT", "TO", "SPEECH", "TURN", "OFF", "ON", "TOGGLE"};
     SpeechRecognizer speechRecognizer;  //Speech-To-Text translator
-    TextToSpeech textToSpeech, txtTspch, BarcodeTTS;    //Text-To-Speech prompts that will play
+    TextToSpeech textToSpeech, txtTspch, OpenCameraTTS, OpenOptionsTTS, ChangeOptionsTTS;    //Text-To-Speech prompts that will play
     boolean TextToSpeechOnOFF = true; //TextToSpeech Option (default: TTS is ON)
     String CurrentTheme;
 
@@ -126,22 +132,70 @@ public class SpeechText extends AppCompatActivity {
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 Textedit.setText(data.get(0));
 
+                ExecutorService executorService = Executors.newFixedThreadPool(3);
+
+                //How confident we are in what the user is asking for
+                AtomicInteger cameraConfScore = new AtomicInteger(0);
+                AtomicInteger optionsConfScore = new AtomicInteger(0);
+                AtomicInteger optChangeConfScore = new AtomicInteger(0);
+
                 //Checking to See if the user is asking to open the camera up or not
                 for (String x : data) {
-                    for (String s : CameraArray) {
-                        if (x.toUpperCase().contains(s)) {
-                            ++CameraConfScore;
+                    executorService.submit(() ->{
+                        for (String s : CameraArray) {
+                            if (x.toUpperCase().contains(s)) {
+                                cameraConfScore.incrementAndGet();
+                            }
                         }
-                    }
+                    });
+                    executorService.submit(()->{
+                        for (String y : OptionsArray){
+                            if(x.toUpperCase().contains(y)){
+                                optionsConfScore.incrementAndGet();
+                            }
+                        }
+                    });
+                    executorService.submit(()->{
+                       for(String z : OptionsChange){
+                           if(x.toUpperCase().contains(z)){
+                               optChangeConfScore.incrementAndGet();
+                           }
+                       }
+                    });
+                }
+                // Shutdown the executor when all tasks are completed
+                executorService.shutdown();
+
+                // Wait for all threads to finish
+                try {
+                    executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+                } catch (InterruptedException e) {
+                    // Handle the exception if needed
                 }
 
-                if (CameraConfScore > 1) {
+                // Retrieve the final scores
+                int finalCameraConfScore = cameraConfScore.get();
+                int finalOptionsConfScore = optionsConfScore.get();
+                int finalOptConfScore = optChangeConfScore.get();
 
+                if (finalCameraConfScore > finalOptionsConfScore && finalCameraConfScore > finalOptConfScore) {
                     if(TextToSpeechOnOFF){
                         CameraOpeningTextToSpeech();
                     }
 
-                }else {
+                }else if(finalOptionsConfScore > finalCameraConfScore && finalOptionsConfScore > finalOptConfScore){
+                    if(TextToSpeechOnOFF){
+                        OptionsOpeningTextToSpeech();
+                    }
+                }else if(finalOptConfScore > finalCameraConfScore && finalOptConfScore > finalOptionsConfScore){
+                    if(TextToSpeechOnOFF){
+                        TextToSpeechOnOFF = false;
+                        ChangeOptionsTextToSpeech(true);
+                    }else{
+                        TextToSpeechOnOFF = true;
+                        ChangeOptionsTextToSpeech(false);
+                    }
+                }else{
                     DidntCatchThat();
                 }
             }
@@ -162,25 +216,85 @@ public class SpeechText extends AppCompatActivity {
         speechRecognizer.destroy();
     }
 
+    private void SaveSettings() {
+
+        sp = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
+        SharedPreferences.Editor spEdit = sp.edit();
+        spEdit.putBoolean("TTS", TextToSpeechOnOFF);
+        spEdit.apply();
+    }
+
+
+    public void OptionsOpeningTextToSpeech(){
+        //Turning on the the TextToSpeech talker
+        OpenOptionsTTS = new TextToSpeech(getApplicationContext(), i -> {
+
+            // if No error is found then TextToSpeech can perform the translation
+            if (i != TextToSpeech.ERROR) {
+                // To Choose language of speech
+                OpenOptionsTTS.setLanguage(Locale.getDefault());
+
+                //Let the user know what actions are occurring
+                OpenOptionsTTS.speak("Okay, Opening the option menu", TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
+        OpenOptionsTTS.shutdown();
+        new CountDownTimer(2000, 1000){
+            public void onFinish(){
+                OpenOptionsMenu();
+            }
+            @Override
+            public void onTick(long l){}
+        }.start();
+    }
+
+    public void ChangeOptionsTextToSpeech(boolean alreadyOn){
+        ChangeOptionsTTS = new TextToSpeech(getApplicationContext(), i ->{
+            // if No error is found then TextToSpeech can perform the translation
+            if (i != TextToSpeech.ERROR) {
+                // To Choose language of speech
+                ChangeOptionsTTS.setLanguage(Locale.getDefault());
+
+                //Let the user know what actions are occurring
+                if(alreadyOn){
+                    SaveSettings();
+                    ChangeOptionsTTS.speak("Okay, I have toggled your text to speech off", TextToSpeech.QUEUE_FLUSH, null, null);
+                }else{
+                    SaveSettings();
+                    ChangeOptionsTTS.speak("Okay, I have toggled your text to speech on", TextToSpeech.QUEUE_FLUSH, null, null);
+                }
+
+            }
+        });
+        ChangeOptionsTTS.shutdown();
+
+        new CountDownTimer(2000, 1000){
+            public void onFinish(){
+                OpenMainMenu();
+            }
+            @Override
+            public void onTick(long l){}
+        }.start();
+    }
     /*
      * This function will create the TTS object and tell the user
      *     we are now going to open the camera
      */
     public void CameraOpeningTextToSpeech(){
         //Turning on the the TextToSpeech talker
-        BarcodeTTS = new TextToSpeech(getApplicationContext(), i -> {
+        OpenCameraTTS = new TextToSpeech(getApplicationContext(), i -> {
 
             // if No error is found then TextToSpeech can perform the translation
             if (i != TextToSpeech.ERROR) {
                 // To Choose language of speech
-                BarcodeTTS.setLanguage(Locale.getDefault());
+                OpenCameraTTS.setLanguage(Locale.getDefault());
 
                 //Let the user know what actions are occurring
-                BarcodeTTS.speak("Okay, Opening the Camera.", TextToSpeech.QUEUE_FLUSH, null, null);
-                BarcodeTTS.speak("Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_ADD, null, null);
+                OpenCameraTTS.speak("Okay, Opening the Camera. Please place the barcode of the item in-front of the camera", TextToSpeech.QUEUE_FLUSH, null, null);
             }
         });
-        BarcodeTTS.shutdown();
+        OpenCameraTTS.shutdown();
+
         openScanner();
     }
 
@@ -209,13 +323,26 @@ public class SpeechText extends AppCompatActivity {
      * This function opens the Barcode Scanning Activity
      */
     private void openScanner() {
-        if(txtTspch != null) { txtTspch.stop(); }
+
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up to flash on");
         options.setBeepEnabled(true);
         options.setOrientationLocked(false);
         options.setCaptureActivity(CamActivity.class);
         barLauncher.launch(options);
+    }
+
+    /*
+     * Opening the Options menu
+     */
+    public void OpenOptionsMenu(){
+        Intent OptionsMenu = new Intent(SpeechText.this, OptionsMenu.class);
+        startActivity(OptionsMenu);
+    }
+
+    public void OpenMainMenu(){
+        Intent MainMenu = new Intent(SpeechText.this, MainActivity.class);
+        startActivity(MainMenu);
     }
 
 }

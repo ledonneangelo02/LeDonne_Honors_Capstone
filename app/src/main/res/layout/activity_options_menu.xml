@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="30dp"
         android:textColor="@color/black"
         android:text="@string/options_menu"
         android:textSize="25pt"
@@ -42,38 +43,19 @@
         android:scaleY="2"
         tools:ignore="UseSwitchCompatOrMaterialXml"
         />
-    <TextView
-        android:id="@+id/TitleColorScheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/TextToSpeechToggle"
-        android:textColor="@color/black"
-        android:text="@string/color_scheme"
-        android:textSize="18pt"
-        android:textStyle="bold"
-        />
 
-    <Spinner
-        android:id="@+id/ColorSchemeSpinner"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/TitleColorScheme"
-        android:layout_centerHorizontal="true"
-        />
 
     <Button
         android:id="@+id/ReturnHomeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ColorSchemeSpinner"
+        android:layout_below="@+id/TextToSpeechToggle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         app:strokeColor="@color/black"
         app:strokeWidth="4dp"
         app:backgroundTint="@color/white"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:text="@string/save_and_return"
         android:textSize="15pt"
@@ -87,6 +69,7 @@
         app:strokeColor="@color/black"
         app:strokeWidth="4dp"
         app:backgroundTint="@color/white"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:text="@string/SpeakACommand"
         android:textSize="15pt"

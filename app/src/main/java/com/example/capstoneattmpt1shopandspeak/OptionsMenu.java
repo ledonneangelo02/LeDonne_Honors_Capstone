@@ -4,29 +4,22 @@ package com.example.capstoneattmpt1shopandspeak;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 
 public class OptionsMenu extends AppCompatActivity {
 
-    String selectedTheme = "Black on White";
     boolean TextToSpeechOn = true;
     SharedPreferences fetchSP, sp;
-    Spinner spinner;
     Switch TTS;
-    ArrayAdapter<String> adapter;
-    List<String> ColorScheme;
+    TextToSpeech txtTspch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +27,8 @@ public class OptionsMenu extends AppCompatActivity {
         setContentView(R.layout.activity_options_menu);
 
         //Save and go back to home page
-        Button RTM = findViewById(R.id.ReturnHomeBtn);
-        RTM.setOnClickListener(v -> ReturnHome());
+        Button ReturnHomeButton = findViewById(R.id.ReturnHomeBtn);
+        ReturnHomeButton.setOnClickListener(v -> ReturnHome());
 
         //Save and speak a command to the application
         Button SpeakCommand = findViewById(R.id.SpeakACommand);
@@ -44,37 +37,36 @@ public class OptionsMenu extends AppCompatActivity {
         //Switch for TextToSpeech Toggling
         TTS = findViewById(R.id.TextToSpeechToggle);
 
+        //Get the shared preferences from the AppSettings section in private mode
+        fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
+
+        //Whatever the stored state of the text to speech is
+        TTS.setChecked(fetchSP.getBoolean("TTS", true));
+
+        if(TTS.isChecked()){
+            TextToSpeechInstuctions();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        //Get the shared preferences from the AppSettings section in private mode
-        fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
-        selectedTheme = fetchSP.getString("Theme", "");
 
-        //Setup the spinner with the values of different themes
-        SpinnerSetup();
-
-        //Whatever the stored state of the text to speech is
-        TTS.setChecked(fetchSP.getBoolean("TTS", true));
     }
 
     private void SaveSettings() {
         TextToSpeechOn = TTS.isChecked();
 
-        Log.i("SelectedTheme on close", selectedTheme);
-
         sp = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
         SharedPreferences.Editor spEdit = sp.edit();
-        spEdit.putString("Theme", selectedTheme);
         spEdit.putBoolean("TTS", TextToSpeechOn);
         spEdit.apply();
     }
 
     private void ReturnHome() {
 
+        if(txtTspch != null) { txtTspch.shutdown(); }
         //Save the users changed settings
         SaveSettings();
 
@@ -83,37 +75,35 @@ public class OptionsMenu extends AppCompatActivity {
     }
 
     private void OpenSpeakACommand() {
+
+        if(txtTspch != null) { txtTspch.shutdown(); }
+
+        //Save the users changed settings
+        SaveSettings();
+
         Intent SpeakCommands = new Intent(OptionsMenu.this, SpeechText.class);
         startActivity(SpeakCommands);
     }
 
+    private void TextToSpeechInstuctions(){
 
-    /*
-        This Function is strictly for setting up and dealing with the Spinner for the theme selection.
-    */
-    private void SpinnerSetup() {
-
-        //ColorScheme for different visual impairments
-        ColorScheme = new ArrayList<>();
-        ColorScheme.add(selectedTheme);
-        ColorScheme.add("High Contrast");
-        ColorScheme.add("White on Black");
-
-        //Spinner Adapter Boilerplate Code
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ColorScheme);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner = findViewById(R.id.ColorSchemeSpinner);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //Selected Theme string, so we can save the activity
-                selectedTheme = spinner.getSelectedItem().toString();
+        //Turning on the the TextToSpeech Object
+        txtTspch = new TextToSpeech(getApplicationContext(), i -> {
+            // if No error is found then TextToSpeech can perform the translation
+            if(i != TextToSpeech.ERROR){
+                // To Choose language of speech
+                txtTspch.setLanguage(Locale.getDefault());
+                //Ask the user to pick an option
+                new CountDownTimer(2000, 1000){
+                    public void onFinish(){
+                        txtTspch.speak("Please make your changes and click save to return to the home screen, or click the 'speak a command' button", TextToSpeech.QUEUE_FLUSH, null, null);
+                    }
+                    @Override
+                    public void onTick(long l){}
+                }.start();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-
         });
+        txtTspch.shutdown();
     }
+
 }

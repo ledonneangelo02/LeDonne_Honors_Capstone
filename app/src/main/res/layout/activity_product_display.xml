@@ -106,22 +106,33 @@
 
         <Button
             android:id="@+id/CamReturnButton"
-            android:layout_width="263dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/Padder"
             android:layout_centerHorizontal="true"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/return_to_camera"
             android:textAllCaps="false"
-            android:textSize="29sp" />
+            android:textSize="15pt"
+            android:textStyle="bold"/>
+
         <Button
             android:id="@+id/ReturnHomeButton"
-            android:layout_width="263dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/CamReturnButton"
             android:layout_centerHorizontal="true"
-            android:textAlignment="center"
+            app:strokeColor="@color/black"
+            app:strokeWidth="4dp"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:text="@string/MainMenuStr"
             android:textAllCaps="false"
-            android:textSize="29sp" />
+            android:textSize="15pt"
+            android:textStyle="bold"/>
+
 
 </RelativeLayout>

@@ -35,8 +35,12 @@ public class AddProduct extends AppCompatActivity {
         Intent i = getIntent();
         Upc = i.getStringExtra("Upc");
         InitializeProduct();
+
     }
 
+    /*
+     * Create the Product and place it in the database
+     */
     private void InitializeProduct(){
         EditText ProductName = findViewById(R.id.ItemName);
         EditText ProductServing = findViewById(R.id.SerSize);
@@ -65,7 +69,9 @@ public class AddProduct extends AppCompatActivity {
                     .enqueue(new Callback<Products>() {
                         @Override
                         public void onResponse(@NonNull Call<Products> call, @NonNull Response<Products> response) {
-
+                            Toast.makeText(AddProduct.this, "Succesfully Added Product!", Toast.LENGTH_SHORT).show();
+                            Intent ReturnHome = new Intent(AddProduct.this, MainActivity.class);
+                            startActivity(ReturnHome);
                         }
                         @Override
                         public void onFailure(@NonNull Call<Products> call, @NonNull Throwable t) {

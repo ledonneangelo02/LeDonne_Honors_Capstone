@@ -11,7 +11,7 @@
     <string name="serving_size">Serving Size</string>
     <string name="calories_per_serving">Calories Per Serving</string>
     <string name="generate_record">Generate Record</string>
-    <string name="return_to_camera">Return to Camera</string>
+    <string name="return_to_camera">Return To Camera</string>
     <string name="Mic">Microphone</string>
     <string name="TGH">Text goes Here</string>
     <string name="BarCodeText">BARCODE SCANNER</string>
@@ -21,7 +21,7 @@
     <string name="SpeakACommand">SPEAK A COMMAND</string>
     <string name="title_activity_options_menu">OptionsMenu</string>
     <string name="text_to_speech">Text To Speech (Off/On):</string>
-    <string name="options_menu"><u>Options Menu</u>:</string>
+    <string name="options_menu">Options Menu:</string>
     <string name="color_scheme">Color Scheme:</string>
     <string name="MainMenuStr">Return To Main Menu</string>
     <string name="application_logo">Application Logo</string>

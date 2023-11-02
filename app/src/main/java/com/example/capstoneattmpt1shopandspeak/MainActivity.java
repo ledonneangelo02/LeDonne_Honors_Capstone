@@ -81,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
         BarCodeButton.setOnClickListener(v -> openScanner());
         OptButton.setOnClickListener(v -> OpenOptionsMenu());
 
+        SharedPreferences fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
+        TextToSpeechOnOFF = fetchSP.getBoolean("TTS", true);
+        CurrentTheme = fetchSP.getString("Theme", "");
+
+        //Begin to Speak to the user only if the TTS setting is active (True)
+        if(TextToSpeechOnOFF){
+            Hello();
+        }
+
     }
 
     /*
@@ -90,14 +99,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        SharedPreferences fetchSP = this.getSharedPreferences("AppSettings", MODE_PRIVATE);
-        TextToSpeechOnOFF = fetchSP.getBoolean("TTS", true);
-        CurrentTheme = fetchSP.getString("Theme", "");
-
-        //Begin to Speak to the user only if the TTS setting is active (True)
-        if(TextToSpeechOnOFF){
-            Hello();
-        }
     }
 
 
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 //Ask the user to pick an option
                 new CountDownTimer(3000, 1000){
                     public void onFinish(){
-                        txtTspch.speak("Welcome to Shop and Speak!", TextToSpeech.QUEUE_FLUSH, null, null);
+                        txtTspch.speak("Welcome to Shop and Speak!", TextToSpeech.QUEUE_ADD, null, null);
                     }
                     @Override
                     public void onTick(long l){}
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void openScanner() {
 
-        if(txtTspch != null) { txtTspch.stop(); }
+        if(txtTspch != null) { txtTspch.stop(); txtTspch.shutdown(); }
 
         ScanOptions options = new ScanOptions();
         options.setPrompt("Volume up to flash on");
