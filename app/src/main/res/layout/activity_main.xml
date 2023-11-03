@@ -57,7 +57,7 @@
 
         <Button
             android:id="@+id/BCButton"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/OptionsButton"
             android:layout_centerHorizontal="true"
@@ -72,7 +72,7 @@
 
         <Button
             android:id="@+id/SpeakCommandButton"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/BCButton"
             android:layout_centerHorizontal="true"
