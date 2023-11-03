@@ -17,7 +17,7 @@ Retrofit for Springboot RESTful API connection (https://square.github.io/retrofi
 
 
 
-# **App Screenshots**
+# **App Interface**
 
 ## **Main Menu Interface**
 <img src="https://github.com/ledonneangelo02/LeDonne_Honors_Capstone/assets/89311284/4bd21807-e424-4ac2-a3ed-5a524e8e6c7f" width="300" height="600"/>
@@ -28,4 +28,13 @@ Retrofit for Springboot RESTful API connection (https://square.github.io/retrofi
 
 ## **Product Information Display Interface**
 <img src="https://github.com/ledonneangelo02/LeDonne_Honors_Capstone/assets/89311284/4e9be47b-97fd-4f57-8877-c95708351163" width="300" height="600"/>
+
+## **Options Menu Interface**
+<img src="https://github.com/ledonneangelo02/LeDonne_Honors_Capstone/assets/89311284/2acc7d93-a8a4-4833-a178-42df52afc379" width="300" height="600"/>
+
+
+## **App Function Examples**
+https://github.com/ledonneangelo02/LeDonne_Honors_Capstone/assets/89311284/4f47e09f-e06c-4f27-a8a0-76a9104c33bb
+
+
 
