@@ -42,7 +42,7 @@
         <TextView
             android:id="@+id/ProductServingSizeLabel"
             android:layout_width="210dp"
-            android:layout_height="120dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/ProductName"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -52,7 +52,7 @@
         <TextView
             android:id="@+id/PrintedServingSize"
             android:layout_width="210dp"
-            android:layout_height="120dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/ProductName"
             android:layout_toEndOf="@+id/ProductServingSizeLabel"
             android:textSize="20sp"
@@ -61,7 +61,7 @@
         <TextView
             android:id="@+id/ProductCaloriesLabel"
             android:layout_width="210dp"
-            android:layout_height="120dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/PrintedServingSize"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -71,7 +71,7 @@
         <TextView
             android:id="@+id/ProductCalories"
             android:layout_width="210dp"
-            android:layout_height="120dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/PrintedServingSize"
             android:layout_toEndOf="@+id/ProductCaloriesLabel"
             android:textSize="20sp"
@@ -80,7 +80,7 @@
         <TextView
             android:id="@+id/ServingCountLabel"
             android:layout_width="210dp"
-            android:layout_height="120dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/ProductCalories"
             android:text="@string/ServingCountLabel"
             android:textStyle="bold"
@@ -90,7 +90,7 @@
         <TextView
             android:id="@+id/ProductServingCount"
             android:layout_width="210dp"
-            android:layout_height="120dp"
+            android:layout_height="70dp"
             android:layout_below="@+id/ProductCalories"
             android:layout_toEndOf="@id/ServingCountLabel"
             android:textSize="20sp"
@@ -106,13 +106,14 @@
 
         <Button
             android:id="@+id/CamReturnButton"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/Padder"
             android:layout_centerHorizontal="true"
             app:strokeColor="@color/black"
             app:strokeWidth="4dp"
             app:backgroundTint="@color/white"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:text="@string/return_to_camera"
             android:textAllCaps="false"
@@ -121,7 +122,7 @@
 
         <Button
             android:id="@+id/ReturnHomeButton"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/CamReturnButton"
             android:layout_centerHorizontal="true"
