@@ -11,7 +11,7 @@ The purpose of this project is to establish a connection & communication stream 
 
 
 # **API Information**
-Custom Springboot API for Db2 Connection Written By: Angelo LeDonne (https://github.com/ledonneangelo02/SpringbootDb2API)</br>
+Custom Springboot API for Db2 Connection (https://github.com/ledonneangelo02/SpringbootDb2API)</br>
 ZXing API for Barcode scanning and data retrieval (https://github.com/journeyapps/zxing-android-embedded) </br>
 Springboot RESTful API for Db2 connection to the Marist Mainframe (https://spring.io/projects/spring-boot)</br>
 Retrofit for Springboot RESTful API connection (https://square.github.io/retrofit/)
