@@ -37,8 +37,6 @@ Retrofit for Springboot RESTful API connection (https://square.github.io/retrofi
 ## **App Function Examples**
 https://github.com/ledonneangelo02/LeDonne_Honors_Capstone/assets/89311284/4f47e09f-e06c-4f27-a8a0-76a9104c33bb
 
-https://github.com/ledonneangelo02/LeDonne_Honors_Capstone/assets/89311284/69660db5-d79f-436a-a7b4-d3a2b7753c5c
-
 https://github.com/ledonneangelo02/LeDonne_Honors_Capstone/assets/89311284/d51a5f66-35ca-4179-af54-75800e40e6bf
 
 https://github.com/ledonneangelo02/LeDonne_Honors_Capstone/assets/89311284/f59f204f-4dd2-4ed4-a4df-08e75e90fb79
